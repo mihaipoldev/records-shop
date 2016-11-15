@@ -13,17 +13,17 @@ header {
     header .navbar-brand:hover {
       color: #fff; }
   header .navbar-right li a {
+    background: transparent !important;
     color: #aaa;
     transition: color 0.5s; }
-    header .navbar-right li a:hover {
-      background: transparent;
+    header .navbar-right li a:hover, header .navbar-right li a:focus {
       color: #fff; }
 
 .record-wrapper {
   position: relative;
   margin-bottom: 20px;
-  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.5s;
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s;
   padding: 5px; }
   .record-wrapper:hover {
     box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); }
@@ -45,7 +45,7 @@ header {
       height: 100%;
       width: 100%;
       display: block;
-      transition: opacity 0.3s;
+      transition: opacity 0.2s;
       opacity: 0.1;
       background: #fff; }
   .record-wrapper .details {
@@ -58,7 +58,7 @@ header {
       line-height: 20px;
       font-size: 15px;
       color: #444;
-      transition: color 0.3s; }
+      transition: color 0.2s; }
       .record-wrapper .details a:hover {
         color: #222;
         text-decoration: none; }
@@ -66,5 +66,25 @@ header {
     position: absolute;
     right: 5px;
     bottom: 5px; }
+
+/* Player */
+.audio-player .player-controls .btn-player {
+  display: inline-block;
+  cursor: pointer;
+  margin: 0 2px; }
+  .audio-player .player-controls .btn-player .fa {
+    line-height: 25px; }
+.audio-player .player-progress {
+  height: 5px;
+  width: 100%;
+  background: #999;
+  cursor: pointer; }
+  .audio-player .player-progress .player-bar {
+    width: 0;
+    height: 5px;
+    transition: width 5s;
+    background: #2b542c; }
+  .audio-player .player-progress:hover .player-bar {
+    width: 100%; }
 
 /*# sourceMappingURL=style.css.map */

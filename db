@@ -1,5 +1,23 @@
 RECORDS DATABASE
 
+Artist:
+-name
+_records
+_?social_id
+
+Label:
+-name
+_records
+_?social_id
+
+Track:
+-title
+-side (a1, a2)
+-time
+_artists
+_record
+_preview (mp3)
+
 Record:
 -title
 -code(BDP002)
@@ -20,24 +38,6 @@ _?social_id
 Stock:
 -isInStock
 -?amount
-
-Artist:
--name
-_records
-_?social_id
-
-Label:
--name
-_records
-_?social_id
-
-Track:
--title
--side (a1, a2)
--time
-_artists
-_record
-_preview (mp3)
 
 Image:
 -url

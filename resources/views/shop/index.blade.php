@@ -20,50 +20,25 @@
                         <div class="record-wrapper">
                             <figure>
                                 <a href="#">
-                                    <img src="{{ asset('img/suolo.jpg') }}"/>
+                                    @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
+                                        <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
+                                    @endif
                                     <span class="image-opacity"></span>
                                 </a>
                             </figure>
                             <div class="details">
-                                <a href="#">
+                                <a href="{{ route('record', ['id'=>$record->id]) }}">
                                     @foreach($record->artists as $index => $artist)
                                         @if($index != 0)
                                             ,
                                         @endif
                                         {{ $artist->name }}
                                     @endforeach
-                                     – {{ $record->title }}</a>
+                                    – {{ $record->title }}</a>
                             </div>
                         </div>
                     </div>
                 @endforeach
-
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="record-wrapper">
-                        <figure>
-                            <a href="#">
-                                <img src="{{ asset('img/lisiere_collectif.jpg') }}" style="width: 100%;"/>
-                                <span class="image-opacity"></span>
-                            </a>
-                        </figure>
-                        <div class="details">
-                            <a href="#">Lisiere Collectif – Mulenv008 ( Vinyl Only )</a>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-xs-12 col-sm-6 col-md-4">
-                    <div class="record-wrapper">
-                        <figure>
-                            <a href="#">
-                                <img src="{{ asset('img/tc80.jpg') }}" style="width: 100%;"/>
-                                <span class="image-opacity"></span>
-                            </a>
-                        </figure>
-                        <div class="details">
-                            <a href="#">Tc80 – Mulenv008 ( Vinyl Only )</a>
-                        </div>
-                    </div>
-                </div>
             </section>
 
         </div>

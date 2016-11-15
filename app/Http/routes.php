@@ -11,9 +11,18 @@
 |
 */
 
-Route::get('/', function () {
-    return view('shop.index');
+Route::get('/', function() {
+	return view('shop.index');
 });
-Route::get('/login', function () {
+Route::get('/login', function() {
 	return view('user.login');
 });
+Route::get('/record-image/{title}', function($title) {
+	$file = Storage::disk('local')->get('records/' . $title . '/side-a.jpg');
+
+	return new Illuminate\Http\Response($file, 200);
+})->name('record.image');
+
+Route::get('/record/{id}', function($id) {
+	return view('shop.record', ['record'=>\App\Models\Record::find($id)]);
+})->name('record');
