@@ -1,0 +1,58 @@
+RECORDS DATABASE
+
+Record:
+-title
+-code(BDP002)
+-isVinylOnly
+-price
+-size(180g)
+-type(ep, lp)
+-stock_id
+-release_date
+_images
+_tracks
+_label_id
+_artists
+_???categories(minimal...)
+_?userThatSavedRecord
+_?social_id
+
+Stock:
+-isInStock
+-?amount
+
+Artist:
+-name
+_records
+_?social_id
+
+Label:
+-name
+_records
+_?social_id
+
+Track:
+-title
+-side (a1, a2)
+-time
+_artists
+_record
+_preview (mp3)
+
+Image:
+-url
+_side (a, b)
+
+Social:
+-facebook
+-soundcloud
+
+User:
+-username
+-email
+-password
+_role_id
+_savedRecords
+
+
+
