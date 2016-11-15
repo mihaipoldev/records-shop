@@ -1,0 +1,70 @@
+body {
+  background: #eee; }
+
+header {
+  height: 50px;
+  line-height: 50px;
+  background: #27261f; }
+  header .navbar-brand {
+    line-height: 50px;
+    padding: 0 15px;
+    color: #aaa;
+    transition: color 0.5s; }
+    header .navbar-brand:hover {
+      color: #fff; }
+  header .navbar-right li a {
+    color: #aaa;
+    transition: color 0.5s; }
+    header .navbar-right li a:hover {
+      background: transparent;
+      color: #fff; }
+
+.record-wrapper {
+  position: relative;
+  margin-bottom: 20px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.5s;
+  padding: 5px; }
+  .record-wrapper:hover {
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); }
+    .record-wrapper:hover figure .image-opacity {
+      opacity: 0; }
+    .record-wrapper:hover .details a {
+      color: #000;
+      text-decoration: none; }
+  .record-wrapper figure {
+    position: relative;
+    display: table-cell;
+    width: 20%;
+    overflow: hidden; }
+    .record-wrapper figure img {
+      width: 100%; }
+    .record-wrapper figure .image-opacity {
+      position: absolute;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      display: block;
+      transition: opacity 0.3s;
+      opacity: 0.1;
+      background: #fff; }
+  .record-wrapper .details {
+    display: table-cell;
+    width: 80%;
+    padding: 0 10px;
+    vertical-align: middle;
+    height: 100%; }
+    .record-wrapper .details a {
+      line-height: 20px;
+      font-size: 15px;
+      color: #444;
+      transition: color 0.3s; }
+      .record-wrapper .details a:hover {
+        color: #222;
+        text-decoration: none; }
+  .record-wrapper .btn-add {
+    position: absolute;
+    right: 5px;
+    bottom: 5px; }
+
+/*# sourceMappingURL=style.css.map */
