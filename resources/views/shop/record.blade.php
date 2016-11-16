@@ -18,3 +18,7 @@
         </div>
     </main>
 @endsection
+
+@section('extra_js')
+    <script src="{{ URL::to('js/audioPlayer.js') }}"></script>
+@endsection

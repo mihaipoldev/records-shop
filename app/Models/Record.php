@@ -15,6 +15,11 @@ class Record extends Model
 		return $this->belongsToMany('App\Models\Artist');
 	}
 
+	public function tracks()
+	{
+		return $this->hasMany('App\Models\Track');
+	}
+
 	public function label()
 	{
 		return $this->belongsTo('App\Models\Label');

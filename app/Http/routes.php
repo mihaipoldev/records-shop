@@ -11,6 +11,8 @@
 |
 */
 
+use App\Models\Track;
+
 Route::get('/', function() {
 	return view('shop.index');
 });
@@ -26,3 +28,23 @@ Route::get('/record-image/{title}', function($title) {
 Route::get('/record/{id}', function($id) {
 	return view('shop.record', ['record'=>\App\Models\Record::find($id)]);
 })->name('record');
+
+Route::post('/record-analyser', function(\Illuminate\Http\Request $request) {
+	$track = Track::where('title', 'Goneta')->first();
+	$array = $request['array'];
+	$track->player_analyser = $array;
+	// dump($track);die;
+	$track->update();
+
+})->name('record.analyzer');
+
+Route::get('/record-analyser/{id}', function($id) {
+	$track = Track::where('title', 'Goneta')->first();
+	$array = explode(' ', $track->player_analyser);
+	foreach ($array as $key => $value){
+		$array[$key] = intval(round($value));
+	}
+	// dd($array);die;
+
+	return view('shop.record-analyser', ['track'=>$track, 'array'=>$array]);
+})->name('record.analyser.player');

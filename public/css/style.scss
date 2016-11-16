@@ -121,21 +121,49 @@ header {
 
 	}
   }
-  .player-progress{
+  #progress-bar{
 	height: 5px;
 	width: 100%;
 	background: #999;
 	cursor: pointer;
-	.player-bar{
+	#progress{
 	  width: 0;
 	  height: 5px;
-	  transition: width 5s;
+	  //transition: width 5s;
 	  background: #2b542c;
+	  display: block;
 	}
-	&:hover{
-	  .player-bar{
-		width: 100%;
+	//&:hover{
+	//  #progress{
+	//	width: 100%;
+	//  }
+	//}
+  }
+  #playlist{
+	li{
+	  list-style: none;
+	  cursor: pointer;
+	  &.active{
+		color: red;
 	  }
+	}
+  }
+  #analyser{
+	width: 100%;
+	height: 50px;
+	background: #b5c4db;
+  }
+}
+
+.parent{
+  background: #ccc;
+  font-size: 0;
+  .child{
+	margin-right: 1px;
+  }
+  .bottom{
+	.child{
+	  vertical-align:top;
 	}
   }
 }

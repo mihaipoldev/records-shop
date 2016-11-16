@@ -12,6 +12,9 @@
         @yield('main')
         @include('includes.footer')
 
+
         <script src="{{ asset('libs/bootstrap-3.3.7/bootstrap.min.js') }}"></script>
+
+        @yield('extra_js')
     </body>
 </html>
