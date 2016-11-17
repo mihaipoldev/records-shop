@@ -25,7 +25,7 @@
         <span id="progress"></span>
     </div>
     <div id="time">
-        <span id="elapsed"></span>:
+        <span id="current-duration"></span>:
         <span id="total"></span>
     </div>
     <div class="clearfix"></div>
