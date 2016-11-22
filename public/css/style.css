@@ -68,28 +68,28 @@ header {
     bottom: 5px; }
 
 /* Player */
-.audio-player .player-controls .btn-player {
+#audio-player .controls .btn-player {
   display: inline-block;
   cursor: pointer;
   margin: 0 2px; }
-  .audio-player .player-controls .btn-player .fa {
+  #audio-player .controls .btn-player .fa {
     line-height: 25px; }
-.audio-player #progress-bar {
+#audio-player #progress-bar {
   height: 5px;
   width: 100%;
   background: #999;
   cursor: pointer; }
-  .audio-player #progress-bar #progress {
+  #audio-player #progress-bar #progress {
     width: 0;
     height: 5px;
     background: #2b542c;
     display: block; }
-.audio-player #playlist li {
+#audio-player #playlist li {
   list-style: none;
   cursor: pointer; }
-  .audio-player #playlist li.active {
+  #audio-player #playlist li.active {
     color: red; }
-.audio-player #analyser {
+#audio-player #analyser {
   width: 100%;
   height: 50px;
   background: #b5c4db; }

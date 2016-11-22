@@ -20,5 +20,10 @@
 @endsection
 
 @section('extra_js')
+    <script src="{{ URL::to('js/wavesurfer.js') }}"></script>
+
     <script src="{{ URL::to('js/audioPlayer.js') }}"></script>
+
+    <script>
+    </script>
 @endsection

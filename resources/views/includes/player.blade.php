@@ -1,8 +1,8 @@
-<div class="audio-player">
-    <div id="info">
-        <span id="artist"></span>-<span id="title"></span>
+<div id="audio-player">
+    <div class="info">
+        <span class="artist"></span>-<span class="title"></span>
     </div>
-    <div class="player-controls">
+    <div class="controls">
         <div class="btn-player" id="prev">
             <i class="fa fa-fast-backward"></i>
         </div>
@@ -19,13 +19,14 @@
             <i class="fa fa-stop"></i>
         </div>
         <input id="volume" type="range" min="0" max="10" value="5" style="display: inline-block; width: 150px;"/>
+        <div id="vol"></div>
     </div>
     <div class="clearfix"></div>
     <div id="progress-bar">
         <span id="progress"></span>
     </div>
     <div id="time">
-        <span id="current-duration"></span>:
+        <span id="current-time"></span>:
         <span id="total"></span>
     </div>
     <div class="clearfix"></div>
@@ -35,3 +36,4 @@
     </ul>
     <canvas id="analyser_render"></canvas>
 </div>
+<div id="waveform"></div>
