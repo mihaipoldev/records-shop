@@ -14,8 +14,8 @@ class CreateLabelsTable extends Migration
     {
         Schema::create('labels', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
 	        $table->string('name');
+	        $table->timestamps();
         });
     }
 

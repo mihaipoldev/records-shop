@@ -14,10 +14,10 @@ class CreateTracksTable extends Migration
     {
         Schema::create('tracks', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
-	        $table->string('title');
 	        $table->integer('record_id');
-	        $table->text('player_analyser');
+	        $table->string('title');
+	        $table->string('audio_path');
+	        $table->timestamps();
         });
     }
 
