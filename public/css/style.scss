@@ -165,6 +165,8 @@ header {
   li {
 	list-style: none;
 	.item {
+	  width: 30%;
+	  margin-bottom: 3px;
 	  padding: 0 10px;
 	  border-radius: 2px;
 	  display: inline-block;
@@ -190,7 +192,27 @@ main {
   }
 }
 .content {
-  h3 {
+  h2 {
 	margin: 0;
+	margin-bottom: 10px;
   }
+}
+.btn-primary {
+  background: #286090;
+  border: #286090;
+  &:hover,
+  &:focus,
+  &:active {
+	background: #265080;
+  }
+}
+section.item {
+  margin-bottom: 20px;
+  p {
+	margin-bottom: 5px;
+  }
+}
+section.other-releases {
+  background: #f5f5f5;
+  padding: 20px 0;
 }

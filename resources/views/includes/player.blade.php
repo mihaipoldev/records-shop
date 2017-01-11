@@ -26,11 +26,11 @@
     </div>
     <div class="clearfix"></div>
     <ul id="playlist">
-        @foreach($record->tracks as $track)
+        @foreach($record->tracks as $index => $track)
             <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
-                <div class="item">{{ $track->title }}</div>
+                <div class="item {{ !$index ? 'active' : '' }}">{{ $track->title }}</div>
             </li>
         @endforeach
     </ul>
-    <canvas id="analyser_render"></canvas>
+    {{--<canvas id="analyser_render"></canvas>--}}
 </div>

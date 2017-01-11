@@ -105,6 +105,8 @@ header {
 #playlist li {
   list-style: none; }
   #playlist li .item {
+    width: 30%;
+    margin-bottom: 3px;
     padding: 0 10px;
     border-radius: 2px;
     display: inline-block;
@@ -123,7 +125,23 @@ main {
   .image-column figure img {
     width: 100%; }
 
-.content h3 {
-  margin: 0; }
+.content h2 {
+  margin: 0;
+  margin-bottom: 10px; }
+
+.btn-primary {
+  background: #286090;
+  border: #286090; }
+  .btn-primary:hover, .btn-primary:focus, .btn-primary:active {
+    background: #265080; }
+
+section.item {
+  margin-bottom: 20px; }
+  section.item p {
+    margin-bottom: 5px; }
+
+section.other-releases {
+  background: #f5f5f5;
+  padding: 20px 0; }
 
 /*# sourceMappingURL=style.css.map */
