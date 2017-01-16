@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-columns')
 
 @section('title')
     Shop
@@ -7,11 +7,14 @@
 @section('main')
     <main>
         <section class="item">
-            <div class="container">
+            {{--<div class="container">--}}
                 <div class="row">
                     <div class="col-sm-4 image-column">
                         <figure>
-                            <img src="{{ asset('img/records/mihai-pol-goneta/artwork.jpg') }}" alt="artwork"/>
+                            @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
+                                <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
+                            @endif
+                            {{--<img src="{{ asset('img/records/mihai-pol-goneta/artwork.jpg') }}" alt="artwork"/>--}}
                         </figure>
                     </div>
                     <div class="col-sm-8 content">
@@ -36,7 +39,16 @@
                             <small>format:</small>
                             12"
                         </p>
-                        @include('includes.player', ['record'=>$record])
+                        {{--@include('includes.player', ['record'=>$record])--}}
+                        <div class="audio-player">
+                        <ul id="playlist">
+                            @foreach($record->tracks as $index => $track)
+                                <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
+                                    <div class="item {{ !$index ? 'active' : '' }}">{{ $track->title }}</div>
+                                </li>
+                            @endforeach
+                        </ul>
+                        </div>
                         <hr>
                         <div>
                             <div class="pull-right">
@@ -50,7 +62,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            {{--</div>--}}
         </section>
 
         <section class="other-releases">
@@ -60,10 +72,36 @@
                         <h3>Other releases from <b>{{ $record->label->name }}</b></h3>
                     </div>
                 </div>
+                <div class="row">
+                    @foreach($record->label->records as $labelRecord)
+                        @if($labelRecord->id != $record->id)
+                            <div class="col-sm-4">
+                                <div class="record-wrapper">
+                                    <figure>
+                                        <a href="#">
+                                            @if(Storage::disk('local')->has('records/' . strtolower($labelRecord->title)))
+                                                <img src="{{ route('record.image', ['title' => strtolower($labelRecord->title)]) }}"/>
+                                            @endif
+                                            <span class="image-opacity"></span>
+                                        </a>
+                                    </figure>
+                                    <div class="details">
+                                        <a href="{{ route('record', ['id'=>$labelRecord->id]) }}">
+                                            @foreach($labelRecord->artists as $index => $artist)
+                                                @if($index != 0)
+                                                    ,
+                                                @endif
+                                                {{ $artist->name }}
+                                            @endforeach
+                                            – {{ $labelRecord->title }}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                </div>
             </div>
         </section>
-
-
     </main>
 @endsection
 

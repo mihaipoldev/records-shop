@@ -1,4 +1,4 @@
-<div id="audio-player">
+<div class="audio-player">
     <div class="controls">
         <div class="btn-player" id="prev">
             <i class="fa fa-fast-backward"></i>
@@ -15,7 +15,14 @@
         <div class="btn-player" id="stop">
             <i class="fa fa-stop"></i>
         </div>
-        <input id="volume" type="range" min="0" max="10" value="5" style="display: inline-block; width: 150px;"/>
+        <div class="volume-tool-wrapper">
+            <i class="fa fa-volume-down"></i>
+            <div class="btn-player volume-wrapper">
+                <span id="volume" style="width: 30%"></span>
+            </div>
+            <i class="fa fa-volume-up"></i>
+        </div>
+
         <div id="vol"></div>
     </div>
     <div class="clearfix"></div>
