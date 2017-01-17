@@ -8,17 +8,18 @@
     <main>
         <section class="item">
             {{--<div class="container">--}}
-                <div class="row">
-                    <div class="col-sm-4 image-column">
-                        <figure>
-                            @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
-                                <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
-                            @endif
-                            {{--<img src="{{ asset('img/records/mihai-pol-goneta/artwork.jpg') }}" alt="artwork"/>--}}
-                        </figure>
-                    </div>
-                    <div class="col-sm-8 content">
-                        <h2>{{ $record->title }}</h2>
+            <div class="row">
+                <div class="col-sm-4 image-column">
+                    <figure>
+                        @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
+                            <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
+                        @endif
+                        {{--<img src="{{ asset('img/records/mihai-pol-goneta/artwork.jpg') }}" alt="artwork"/>--}}
+                    </figure>
+                </div>
+                <div class="col-sm-8 content">
+                    <h2>{{ $record->title }} EP</h2>
+                    <div class="info-wrapper">
                         <p>
                             <small>artists:</small>
                             @foreach($record->artists as $artist)
@@ -39,29 +40,48 @@
                             <small>format:</small>
                             12"
                         </p>
-                        {{--@include('includes.player', ['record'=>$record])--}}
-                        <div class="audio-player">
-                        <ul id="playlist">
-                            @foreach($record->tracks as $index => $track)
-                                <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
-                                    <div class="item {{ !$index ? 'active' : '' }}">{{ $track->title }}</div>
-                                </li>
-                            @endforeach
-                        </ul>
+                    </div>
+
+                    {{--@include('includes.player', ['record'=>$record])--}}
+                    <div class="audio-player">
+                        <div class="tracklist-wrapper">
+                            <h3 class="title">Track list</h3>
+                            <ul id="playlist">
+                                @foreach($record->tracks as $index => $track)
+                                    <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
+                                        <div class="item {{ !$index ? 'active' : '' }}"><span>{{ $track->side }}:</span> {{ $track->title }}</div>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <hr>
-                        <div>
-                            <div class="pull-right">
-                                <span>In stock</span>
-                                <div style="position: relative; display: inline-block; height: 5px; width: 100px; background: #aaa;">
-                                    <span style="position: absolute; top:0;display: block; height: 100%; width: 40%; background: #50734b;"></span>
-                                </div>
-                                <h3 style="display: inline-block">&euro; 10,5</h3>
-                                <a href="#" class="btn btn-primary">Add to cart</a>
+                    </div>
+                    <hr>
+                    <div class="chart-wrapper">
+                        <div class="pull-right">
+                            {{--<div style="position: relative; display: inline-block; height: 5px; width: 100px; background: #aaa;">--}}
+                            {{--<span style="position: absolute; top:0;display: block; height: 100%; width: 40%; background: #50734b;"></span>--}}
+                            {{--</div>>--}}
+                            <div class="btn-wrapper">
+                                <a href="#" class="btn btn-primary pull-right">Add to cart</a>
+                            </div>
+                            <div class="stock-percentage clearfix">
+                                <h3 class="price"><b>&euro; 10.5</b></h3>
+                                <span class="stock-bar active"></span>
+                                <span class="stock-bar active"></span>
+                                <span class="stock-bar active"></span>
+                                <span class="stock-bar active"></span>
+                                <span class="stock-bar"></span>
+                                <span class="stock-bar"></span>
+                                <span class="stock-bar"></span>
+                                <span class="stock-bar"></span>
+                                <span class="stock-bar"></span>
+                                <span class="stock-bar"></span>
+                                <span class="info"><b>IN STOCK</b></span>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             {{--</div>--}}
         </section>
 

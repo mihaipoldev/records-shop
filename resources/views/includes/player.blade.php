@@ -1,4 +1,9 @@
 <div class="audio-player">
+    <div>
+        <h4>A1 Goneta by Mihai Pol</h4>
+    </div>
+    <div id="waveform"></div>
+    <div class="clearfix"></div>
     <div class="controls">
         <div class="btn-player" id="prev">
             <i class="fa fa-fast-backward"></i>
@@ -17,16 +22,14 @@
         </div>
         <div class="volume-tool-wrapper">
             <i class="fa fa-volume-down"></i>
-            <div class="btn-player volume-wrapper">
+            <div class="volume-wrapper">
                 <span id="volume" style="width: 30%"></span>
             </div>
-            <i class="fa fa-volume-up"></i>
+            {{--<i class="fa fa-volume-up"></i>--}}
         </div>
 
         <div id="vol"></div>
     </div>
-    <div class="clearfix"></div>
-    <div id="waveform"></div>
     <div id="time">
         <span id="current-time"></span>:
         <span id="total"></span>

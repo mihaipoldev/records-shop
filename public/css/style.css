@@ -1,6 +1,10 @@
 body {
   background: #eee; }
 
+hr {
+  margin: 10px 0;
+  border-top: 1px solid #ccc; }
+
 header {
   height: 50px;
   line-height: 50px;
@@ -19,53 +23,47 @@ header {
     header .navbar-right li a:hover, header .navbar-right li a:focus {
       color: #fff; }
 
-.record-wrapper {
+.record-wrapper:hover {
+  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); }
+  .record-wrapper:hover figure .image-opacity {
+    opacity: 0; }
+  .record-wrapper:hover .details a {
+    color: #000;
+    text-decoration: none; }
+.record-wrapper figure {
   position: relative;
-  margin-bottom: 20px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s;
-  padding: 5px; }
-  .record-wrapper:hover {
-    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3); }
-    .record-wrapper:hover figure .image-opacity {
-      opacity: 0; }
-    .record-wrapper:hover .details a {
-      color: #000;
-      text-decoration: none; }
-  .record-wrapper figure {
-    position: relative;
-    display: table-cell;
-    width: 20%;
-    overflow: hidden; }
-    .record-wrapper figure img {
-      width: 100%; }
-    .record-wrapper figure .image-opacity {
-      position: absolute;
-      top: 0;
-      height: 100%;
-      width: 100%;
-      display: block;
-      transition: opacity 0.2s;
-      opacity: 0.1;
-      background: #fff; }
-  .record-wrapper .details {
-    display: table-cell;
-    width: 80%;
-    padding: 0 10px;
-    vertical-align: middle;
-    height: 100%; }
-    .record-wrapper .details a {
-      line-height: 20px;
-      font-size: 15px;
-      color: #444;
-      transition: color 0.2s; }
-      .record-wrapper .details a:hover {
-        color: #222;
-        text-decoration: none; }
-  .record-wrapper .btn-add {
+  display: table-cell;
+  width: 20%;
+  overflow: hidden; }
+  .record-wrapper figure img {
+    width: 100%; }
+  .record-wrapper figure .image-opacity {
     position: absolute;
-    right: 5px;
-    bottom: 5px; }
+    top: 0;
+    height: 100%;
+    width: 100%;
+    display: block;
+    transition: opacity 0.2s;
+    opacity: 0.1;
+    background: #fff; }
+.record-wrapper .details {
+  display: table-cell;
+  width: 80%;
+  padding: 0 10px;
+  vertical-align: middle;
+  height: 100%; }
+  .record-wrapper .details a {
+    line-height: 20px;
+    font-size: 15px;
+    color: #444;
+    transition: color 0.2s; }
+    .record-wrapper .details a:hover {
+      color: #222;
+      text-decoration: none; }
+.record-wrapper .btn-add {
+  position: absolute;
+  right: 5px;
+  bottom: 5px; }
 
 /* Player */
 .audio-player .controls .btn-player {
@@ -75,14 +73,16 @@ header {
   margin: 0 2px;
   line-height: 35px;
   height: 35px;
-  width: 30px;
+  width: 20px;
   text-align: center; }
+  .audio-player .controls .btn-player:hover i {
+    color: #333; }
   .audio-player .controls .btn-player i {
     line-height: 35px; }
 .audio-player .controls .volume-wrapper {
   position: relative;
   background: #999;
-  height: 5px;
+  height: 7px;
   width: 200px;
   display: inline-block;
   cursor: pointer; }
@@ -121,14 +121,17 @@ header {
     list-style: none; }
     #playlist li .item {
       width: 100%;
-      margin-bottom: 3px;
-      padding: 0 10px;
-      border-radius: 2px;
+      padding: 3px 10px;
       display: inline-block;
       transition: background-color 0.3s;
       cursor: pointer; }
-      #playlist li .item.active, #playlist li .item:hover {
-        background-color: #aaa; }
+      #playlist li .item:hover {
+        color: #333; }
+      #playlist li .item.active {
+        background-color: #ddd; }
+      #playlist li .item span {
+        color: #2b542c;
+        font-weight: bold; }
 
 /* * New css */
 main {
@@ -162,17 +165,77 @@ section.other-releases {
   padding: 20px 0; }
 
 .player-wrapper {
-  margin-top: 30px;
-  border: 1px solid #999;
-  padding: 5px; }
+  margin-top: 40px;
+  background: #ddd;
+  padding: 10px; }
   .player-wrapper .audio-player .volume-tool-wrapper {
-    float: left;
-    padding-top: 15px; }
+    border-left: 1px solid #bbb;
+    margin-left: 5px;
+    height: 35px;
+    line-height: 35px;
+    float: left; }
     .player-wrapper .audio-player .volume-tool-wrapper i {
-      float: left; }
+      font-size: 20px;
+      height: 35px;
+      line-height: 35px;
+      float: left;
+      margin-left: 10px;
+      margin-right: 5px; }
     .player-wrapper .audio-player .volume-tool-wrapper .volume-wrapper {
+      margin-top: 14px;
       float: left;
       width: 60px; }
+
+.tracklist-wrapper {
+  padding: 10px 0; }
+  .tracklist-wrapper .title {
+    padding: 10px 10px;
+    margin: 0; }
+
+.chart-wrapper {
+  border-top: 1px solid #eee; }
+  .chart-wrapper .stock-percentage {
+    height: 30px;
+    margin-bottom: 10px; }
+    .chart-wrapper .stock-percentage .price {
+      float: left;
+      display: inline-block;
+      line-height: 20px;
+      height: 20px;
+      margin: 0;
+      margin-top: 5px;
+      margin-right: 10px; }
+    .chart-wrapper .stock-percentage .stock-bar {
+      margin-top: 10px;
+      float: left;
+      margin-right: 2px;
+      height: 10px;
+      width: 3px;
+      background: #ccc;
+      display: inline-block; }
+      .chart-wrapper .stock-percentage .stock-bar.active {
+        background: #397843; }
+    .chart-wrapper .stock-percentage .info {
+      margin-top: 5px;
+      font-size: 9px;
+      color: #2b542c;
+      margin-left: 5px;
+      float: left;
+      display: inline-block;
+      line-height: 20px;
+      height: 20px; }
+  .chart-wrapper a.btn {
+    background: #1a2d40;
+    margin-left: 10px;
+    float: left;
+    height: 30px;
+    line-height: 30px;
+    padding: 0 15px; }
+
+.content .info-wrapper p {
+  color: #555; }
+  .content .info-wrapper p small {
+    color: #999; }
 
 @media (min-width: 1200px) {
   .container {
