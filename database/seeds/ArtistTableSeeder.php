@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Artist;
 use Illuminate\Database\Seeder;
 
 class ArtistTableSeeder extends Seeder
@@ -13,16 +14,15 @@ class ArtistTableSeeder extends Seeder
 	{
 		DB::table('artists')->delete();
 
-		$artist = new \App\Models\Artist([
-			'name' => 'Cristi Cons',
-		]);
+		$artist = new Artist();
+		$artist->name = 'Cristi Cons';
 		$artist->save();
 
-		$artist = new \App\Models\Artist();
+		$artist = new Artist();
 		$artist->name = 'Mihai Pol';
 		$artist->save();
 
-		$artist = new \App\Models\Artist();
+		$artist = new Artist();
 		$artist->name = 'Suolo';
 		$artist->save();
 	}

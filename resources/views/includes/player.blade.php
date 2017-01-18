@@ -1,12 +1,9 @@
-<div class="audio-player">
-    <div id="info">
-        <span id="artist"></span>-<span id="title"></span>
-    </div>
-    <div class="player-controls">
+<div id="audio-player">
+    <div class="controls">
         <div class="btn-player" id="prev">
             <i class="fa fa-fast-backward"></i>
         </div>
-        <div class="btn-player" id="play" data-url="{{ route('record.analyzer') }}" data-token="{{csrf_token()}}">
+        <div class="btn-player" id="play" data-url="media/mihai-pol-goneta.mp3">
             <i class="fa fa-play fa-2x"></i>
         </div>
         <div class="btn-player hidden" id="pause">
@@ -19,19 +16,21 @@
             <i class="fa fa-stop"></i>
         </div>
         <input id="volume" type="range" min="0" max="10" value="5" style="display: inline-block; width: 150px;"/>
+        <div id="vol"></div>
     </div>
     <div class="clearfix"></div>
-    <div id="progress-bar">
-        <span id="progress"></span>
-    </div>
+    <div id="waveform"></div>
     <div id="time">
-        <span id="elapsed"></span>:
+        <span id="current-time"></span>:
         <span id="total"></span>
     </div>
     <div class="clearfix"></div>
     <ul id="playlist">
-        <li data-url="{{ URL::to('audio/mihai-pol-goneta.mp3') }}">Goneta</li>
-        <li data-url="{{ URL::to('audio/mihai-pol-science-friction.mp3') }}">Science Friction</li>
+        @foreach($record->tracks as $index => $track)
+            <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
+                <div class="item {{ !$index ? 'active' : '' }}">{{ $track->title }}</div>
+            </li>
+        @endforeach
     </ul>
-    <canvas id="analyser_render"></canvas>
+    {{--<canvas id="analyser_render"></canvas>--}}
 </div>

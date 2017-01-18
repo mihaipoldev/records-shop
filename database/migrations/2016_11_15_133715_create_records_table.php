@@ -14,9 +14,9 @@ class CreateRecordsTable extends Migration
     {
         Schema::create('records', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamps();
             $table->string('title');
             $table->integer('label_id');
+	        $table->timestamps();
         });
     }
 

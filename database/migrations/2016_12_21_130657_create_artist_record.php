@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateLabelsTable extends Migration
+class CreateArtistRecord extends Migration
 {
     /**
      * Run the migrations.
@@ -12,11 +12,12 @@ class CreateLabelsTable extends Migration
      */
     public function up()
     {
-        Schema::create('labels', function (Blueprint $table) {
-            $table->increments('id');
-	        $table->string('name');
-	        $table->timestamps();
-        });
+	    Schema::create('artist_record', function (Blueprint $table) {
+		    $table->increments('id');
+		    $table->integer('artist_id');
+		    $table->integer('record_id');
+		    $table->timestamps();
+	    });
     }
 
     /**
@@ -26,6 +27,6 @@ class CreateLabelsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('labels');
+	    Schema::drop('artist_record');
     }
 }

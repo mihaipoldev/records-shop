@@ -2,18 +2,28 @@
 <html>
     <head>
         <title>@yield('title')</title>
-        <link rel="stylesheet" href="{{ asset('libs/bootstrap-3.3.7/bootstrap.min.css') }}">
-        <link rel="stylesheet" href="{{ asset('libs/font-awesome-4.7.0/css/font-awesome.min.css') }}">
+        <link href="{{ asset('libs/inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('libs/inspinia/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
+
+        <link href="{{ asset('libs/inspinia/css/animate.css') }}" rel="stylesheet">
+        <link href="{{ asset('libs/inspinia/css/style.css') }}" rel="stylesheet">
+
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-        <script src="{{ asset('libs/jquery.min.js') }}"></script>
     </head>
     <body>
+
         @include('includes.header')
         @yield('main')
         @include('includes.footer')
 
 
-        <script src="{{ asset('libs/bootstrap-3.3.7/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('libs/inspinia/js/jquery-2.1.1.js') }}"></script>
+        <script src="{{ asset('libs/inspinia/js/bootstrap.min.js') }}"></script>
+        {{--<script src="{{ asset('libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>--}}
+        {{--<script src="{{ asset('libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>--}}
+
+        {{--<script src="{{ asset('libs/inspinia/js/inspinia.js') }}"></script>--}}
+        {{--<script src="{{ asset('libs/inspinia/js/plugins/pace/pace.min.js') }}"></script>--}}
 
         @yield('extra_js')
     </body>
