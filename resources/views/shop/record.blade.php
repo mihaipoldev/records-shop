@@ -95,25 +95,31 @@
                 <div class="row">
                     @foreach($record->label->records as $labelRecord)
                         @if($labelRecord->id != $record->id)
-                            <div class="col-sm-4">
+                            <div class="col-md-3">
                                 <div class="record-wrapper">
                                     <figure>
                                         <a href="#">
-                                            @if(Storage::disk('local')->has('records/' . strtolower($labelRecord->title)))
-                                                <img src="{{ route('record.image', ['title' => strtolower($labelRecord->title)]) }}"/>
+                                            @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
+                                                <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
                                             @endif
                                             <span class="image-opacity"></span>
                                         </a>
                                     </figure>
                                     <div class="details">
-                                        <a href="{{ route('record', ['id'=>$labelRecord->id]) }}">
-                                            @foreach($labelRecord->artists as $index => $artist)
+
+
+                                        <small class="text-muted">
+                                            @foreach($record->artists as $index => $artist)
                                                 @if($index != 0)
                                                     ,
                                                 @endif
                                                 {{ $artist->name }}
                                             @endforeach
-                                            – {{ $labelRecord->title }}</a>
+                                        </small>
+                                        <a href="{{ route('record', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
+
+                                        <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
+
                                     </div>
                                 </div>
                             </div>
