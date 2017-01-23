@@ -1,6 +1,11 @@
-<div class="audio-player">
+<div class="audio-player left-player">
     <div>
-        <h4>A1 Goneta by Mihai Pol</h4>
+        <h4>
+            <span class="side"></span>
+            <a class="track"></a>
+            <small>by</small>
+            <a class="artist"></a>
+        </h4>
     </div>
     <div id="waveform"></div>
     <div class="clearfix"></div>
@@ -37,7 +42,7 @@
     <div class="clearfix"></div>
     <ul id="playlist">
         @foreach($record->tracks as $index => $track)
-            <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
+            <li data-url="{{ URL::to('audio/' . $track->audio_path) }}" data-track="{{ $track->title }}" data-side="{{ $track->side }}">
                 <div class="item {{ !$index ? 'active' : '' }}">{{ $track->title }}</div>
             </li>
         @endforeach

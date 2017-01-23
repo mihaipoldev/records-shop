@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('layouts.master-columns')
 
 @section('title')
     Shop
@@ -23,6 +23,9 @@
                                 @endif
                                 <span class="image-opacity"></span>
                             </a>
+                            <div class="play-wrapper">
+                                <a href="#"><i class="fa fa-play-circle"></i></a>
+                            </div>
                         </figure>
                         <div class="details">
 
@@ -35,9 +38,15 @@
                                     {{ $artist->name }}
                                 @endforeach
                             </small>
-                            <a href="{{ route('record', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
 
-                            <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
+                            <a href="{{ route('record', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
+                            {{--<i class="fa fa-circle"></i>--}}
+                            <div class="left-bottom">
+                                <span style="display: inline-block; margin-right: 5px; color: forestgreen">
+                                    <em>in stock</em>
+                                </span>
+                                <a href="#" class="btn-add pull-right">&euro; {{ $record->label_id }} <i class="fa fa-cart-plus"></i> </a>
+                            </div>
 
                             {{--<a href="{{ route('record', ['id'=>$record->id]) }}">--}}
                             {{--@foreach($record->artists as $index => $artist)--}}
