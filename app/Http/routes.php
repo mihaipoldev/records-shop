@@ -15,7 +15,7 @@ use App\Models\Track;
 
 Route::get('/', function() {
 	return view('shop.index');
-});
+})->name('index');
 Route::get('/login', function() {
 	return view('user.login');
 });

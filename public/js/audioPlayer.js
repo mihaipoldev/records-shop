@@ -10,24 +10,24 @@ $(function() {
 	 */
 	var wavesurfer = WaveSurfer.create({
 		container: '#waveform',
-		height: 60,
+		height: 40,
 		waveColor: '#999',
 		progressColor: '#555',
 		cursorColor: '#555',
 	});
 
-	var $btnPlay = $('#audio-player #play'),
-		$btnPause = $('#audio-player #pause'),
-		$btnStop = $('#audio-player #stop'),
-		$btnNext = $('#audio-player #next'),
-		$btnPrev = $('#audio-player #prev'),
-		$currentTime = $('#audio-player #current-time'),
-		$duration = $('#audio-player #duration'),
-		$playlistItems = $('#audio-player #playlist li'),
+	var $btnPlay = $('.audio-player #play'),
+		$btnPause = $('.audio-player #pause'),
+		$btnStop = $('.audio-player #stop'),
+		$btnNext = $('.audio-player #next'),
+		$btnPrev = $('.audio-player #prev'),
+		$currentTime = $('.audio-player #current-time'),
+		$duration = $('.audio-player #duration'),
+		$playlistItems = $('.audio-player #playlist li'),
 		$activeTrack = $playlistItems.first(),
-		$volume = $('#audio-player #volume'),
-		$progress = $('#audio-player #progress'),
-		$progressBar = $('#audio-player #progress-bar');
+		$volume = $('.audio-player #volume'),
+		$progress = $('.audio-player #progress'),
+		$progressBar = $('.audio-player #progress-bar');
 
 	/*
 	 *  Functions
@@ -125,12 +125,18 @@ $(function() {
 		}
 	}
 
+	function changeVolume() {
+		var volumePercentage = $volume.css("width"),
+			volumeLevel = volumePercentage.substring(0, volumePercentage.length - 1);
+		console.log(volumeLevel);
+	}
+
 	/*
 	 *  WaveSurfer Functions
 	 */
 	initWavesurfer($($playlistItems).first());
 
-	wavesurfer.on('ready', function(  ) {
+	wavesurfer.on('ready', function() {
 		$btnPlay.on('click', function() {
 			play();
 		});
@@ -155,8 +161,16 @@ $(function() {
 			change($(this));
 		});
 
-		$volume.on('change', function() {
-			wavesurfer.setVolume(parseFloat($volume.val() / 10));
+		$('.volume-wrapper').on('click', function() {
+			var mouseX = event.pageX - $volume.offset().left,
+				wrapperWidth = $(this).css('width').substring(0, $(this).css('width').length - 2),
+				progressPercentage = mouseX * 100 / wrapperWidth;
+
+			console.log(mouseX + ' ' + progressPercentage);
+			// audio.currentTime = Math.round(progressTime);
+			// $progress.css('width', progressPercentage + '%');
+			// $currentTime.html(audio.currentTime);
+			// changeVolume();
 		});
 
 		$progressBar.on('click', function() {

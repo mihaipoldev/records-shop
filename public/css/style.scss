@@ -1,5 +1,11 @@
+@import "bootstrap-rewrite.scss";
+
 body {
   background: #eee;
+}
+hr {
+  margin: 10px 0;
+  border-top: 1px solid #ccc;
 }
 header {
   height: 50px;
@@ -30,11 +36,11 @@ header {
   }
 }
 .record-wrapper {
-  position: relative;
-  margin-bottom: 20px;
-  box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
-  transition: box-shadow 0.2s;
-  padding: 5px;
+  //position: relative;
+  //margin-bottom: 20px;
+  //box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.1);
+  //transition: box-shadow 0.2s;
+  //padding: 5px;
   &:hover {
 	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
 	figure {
@@ -49,10 +55,11 @@ header {
 	  }
 	}
   }
+  display: flex;
   figure {
+	//flex: 3;
 	position: relative;
-	display: table-cell;
-	width: 20%;
+	width: 30%;
 	//border-radius: 50%;
 	overflow: hidden;
 	img {
@@ -80,13 +87,14 @@ header {
 	//}
   }
   .details {
-	display: table-cell;
-	width: 80%;
-	padding: 0 10px;
-	vertical-align: middle;
-	height: 100%;
+	background: #fff;
+	//flex: 7;
+	padding: 5px 10px;
+	width: 70%;
+	//height: 100%;
+	//vertical-align: middle;
 	a {
-	  line-height: 20px;
+	  //line-height: 20px;
 	  font-size: 15px;
 	  color: #444;
 	  transition: color 0.2s;
@@ -103,7 +111,7 @@ header {
   }
 }
 /* Player */
-#audio-player {
+.audio-player {
   .controls {
 	.btn-player {
 	  float: left;
@@ -112,8 +120,14 @@ header {
 	  margin: 0 2px;
 	  line-height: 35px;
 	  height: 35px;
-	  width: 30px;
+	  width: 20px;
 	  text-align: center;
+
+	  &:hover {
+		i {
+		  color: #333;
+		}
+	  }
 
 	  //height: 25px;
 	  //width: 25px;
@@ -123,6 +137,23 @@ header {
 		line-height: 35px;
 	  }
 
+	}
+
+	.volume-wrapper {
+	  position: relative;
+	  background: #999;
+	  height: 7px;
+	  width: 200px;
+	  display: inline-block;
+	  cursor: pointer;
+	  #volume {
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: #555;
+		height: 100%;
+
+	  }
 	}
   }
   #progress-bar {
@@ -162,23 +193,30 @@ header {
   }
 }
 #playlist {
+  padding: 0;
   li {
 	list-style: none;
 	.item {
-	  width: 30%;
-	  margin-bottom: 3px;
-	  padding: 0 10px;
-	  border-radius: 2px;
+	  width: 100%;
+	  padding: 3px 10px;
+	  //border-radius: 2px;
 	  display: inline-block;
 	  transition: background-color 0.3s;
 	  cursor: pointer;
-	  &.active, &:hover {
-		background-color: #aaa;
+	  &:hover {
+		color: #333;
+	  }
+	  &.active {
+		background-color: #ddd;
+	  }
+	  span {
+		color: #2b542c;
+		font-weight: bold;
 	  }
 	}
   }
 }
-/* * Ne css */
+/* * New css */
 main {
   padding-top: 40px;
 }
@@ -192,6 +230,7 @@ main {
   }
 }
 .content {
+  font-size: 15px;
   h2 {
 	margin: 0;
 	margin-bottom: 10px;
@@ -215,4 +254,105 @@ section.item {
 section.other-releases {
   background: #f5f5f5;
   padding: 20px 0;
+}
+.player-wrapper {
+  margin-top: 40px;
+  background: #ddd;
+  padding: 10px;
+  .audio-player {
+	.volume-tool-wrapper {
+	  border-left: 1px solid #bbb;
+	  margin-left: 5px;
+	  height: 35px;
+	  line-height: 35px;
+	  float: left;
+	  i {
+		font-size: 20px;
+		height: 35px;
+		line-height: 35px;
+		float: left;
+		margin-left: 10px;
+		margin-right: 5px;
+	  }
+	  .volume-wrapper {
+		margin-top: 14px;
+		float: left;
+		width: 60px;
+	  }
+	}
+
+  }
+}
+
+
+.tracklist-wrapper {
+  padding: 10px 0;
+  .title {
+	padding: 10px 10px;
+	//background: #ccc;
+	margin: 0;
+  }
+}
+.chart-wrapper {
+  border-top: 1px solid #eee;
+  .stock-percentage {
+	height: 30px;
+	margin-bottom: 10px;
+	.price {
+	  float: left;
+	  display: inline-block;
+	  line-height: 20px;
+	  height: 20px;
+	  margin: 0;
+	  margin-top: 5px;
+	  margin-right: 10px;
+	}
+	.stock-bar {
+	  margin-top: 10px;
+	  float: left;
+	  margin-right: 2px;
+	  height: 10px;
+	  width: 3px;
+	  background: #ccc;
+	  display: inline-block;
+	  &.active {
+		background: #397843;
+	  }
+	}
+	.info {
+	  margin-top: 5px;
+	  font-size: 9px;
+	  color: #2b542c;
+	  margin-left: 5px;
+	  float: left;
+	  display: inline-block;
+	  line-height: 20px;
+	  height: 20px;
+	}
+  }
+  a.btn {
+	background: #1a2d40;
+	margin-left: 10px;
+	float: left;
+	height: 30px;
+	line-height: 30px;
+	padding: 0 15px;
+  }
+}
+
+.content{
+  .info-wrapper{
+	p{
+	  color: #555;
+	  small{
+		color: #999;
+	  }
+	}
+  }
+}
+
+@media (min-width: 1200px) {
+  .container {
+	width: 1170px;
+  }
 }

@@ -2,6 +2,7 @@
 <html>
     <head>
         <title>@yield('title')</title>
+
         <link href="{{ asset('libs/inspinia/css/bootstrap.min.css') }}" rel="stylesheet">
         <link href="{{ asset('libs/inspinia/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet">
 
@@ -13,7 +14,16 @@
     <body>
 
         @include('includes.header')
-        @yield('main')
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-9">
+                            @yield('main')
+                        </div>
+                        <div class="col-sm-3">
+
+                        </div>
+                    </div>
+                </div>
         @include('includes.footer')
 
 
