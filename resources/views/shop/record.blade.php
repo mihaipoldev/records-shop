@@ -23,11 +23,12 @@
                         <p>
                             <small>artists:</small>
                             @foreach($record->artists as $artist)
-                                {{ $record->artists[0]->name }},
+                                <a href="#">{{ $record->artists[0]->name }}</a>,
                             @endforeach
                         </p>
                         <p>
-                            <small>label:</small> {{ $record->label->name }}</p>
+                            <small>label:</small> <a href="#label-releases">{{ $record->label->name }}</a>
+                        </p>
                         <p>
                             <small>catalog:</small>
                             [CAP001]!
@@ -48,7 +49,7 @@
                             <h3 class="title">Track list</h3>
                             <ul id="playlist">
                                 @foreach($record->tracks as $index => $track)
-                                    <li data-url="{{ URL::to('audio/' . $track->audio_path) }}">
+                                    <li data-url="{{ URL::to('audio/' . $track->audio_path) }}" data-track="{{ $track->title }}" data-side="{{ $track->side }}">
                                         <div class="item {{ !$index ? 'active' : '' }}"><span>{{ $track->side }}:</span> {{ $track->title }}</div>
                                     </li>
                                 @endforeach
@@ -85,7 +86,7 @@
             {{--</div>--}}
         </section>
 
-        <section class="other-releases">
+        <section class="other-releases" id="label-releases" name="label-releases">
             <div class="container">
                 <div class="row">
                     <div class="col-sm-12">
@@ -99,8 +100,8 @@
                                 <div class="record-wrapper">
                                     <figure>
                                         <a href="#">
-                                            @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
-                                                <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
+                                            @if(Storage::disk('local')->has('records/' . strtolower($labelRecord->title)))
+                                                <img src="{{ route('record.image', ['title' => strtolower($labelRecord->title)]) }}"/>
                                             @endif
                                             <span class="image-opacity"></span>
                                         </a>
@@ -109,14 +110,14 @@
 
 
                                         <small class="text-muted">
-                                            @foreach($record->artists as $index => $artist)
+                                            @foreach($labelRecord->artists as $index => $artist)
                                                 @if($index != 0)
                                                     ,
                                                 @endif
                                                 {{ $artist->name }}
                                             @endforeach
                                         </small>
-                                        <a href="{{ route('record', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
+                                        <a href="{{ route('record', ['id'=>$labelRecord->id]) }}" class="product-name"> {{ $labelRecord->title }}</a>
 
                                         <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
 
@@ -134,7 +135,4 @@
 @section('extra_js')
     <script src="{{ URL::to('js/wavesurfer.js') }}"></script>
     <script src="{{ URL::to('js/audioPlayer.js') }}"></script>
-
-    <script>
-    </script>
 @endsection

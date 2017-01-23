@@ -14,18 +14,19 @@
     <body>
 
         @include('includes.header')
-        <div class="container">
+        <div class="container main-content">
             <div class="row">
                 <div class="col-sm-9">
                     @yield('main')
                 </div>
-                <div class="col-sm-3 fixed">
-                    <div class="player-wrapper">
-                        <div class="player">
-                            @include ('includes.player')
+                <div class="col-sm-3 position-relative">
+                    <div class="affix right-side-fixed">
+                        <div class="player-wrapper">
+                            <div class="player">
+                                @include ('includes.player')
+                            </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -39,6 +40,31 @@
 
         {{--<script src="{{ asset('libs/inspinia/js/inspinia.js') }}"></script>--}}
         {{--<script src="{{ asset('libs/inspinia/js/plugins/pace/pace.min.js') }}"></script>--}}
+
+        <script>
+            jQuery( document ).ready( function(){
+                setFooterPosition();
+                setRightSideWidth();
+
+                window.addEventListener( 'resize', setFooterPosition );
+                window.addEventListener( 'resize', setRightSideWidth );
+
+                function setFooterPosition(){
+                    /* window - header - footer */
+                    var contentMinHeight = $( window ).height() - 50 - 100,
+                            mainHeight = $( 'main' ).height();
+
+                    if( contentMinHeight > mainHeight ){
+                        $( 'footer' ).addClass( 'to-bottom' );
+                    }
+                }
+
+                function setRightSideWidth(){
+                    $columnWidth = parseInt($('.position-relative').css('width').substring(0, $('.position-relative').css('width').length - 2)) - 20;
+                    $('.right-side-fixed').css('width', $columnWidth + 'px');
+                }
+            } );
+        </script>
 
         @yield('extra_js')
     </body>

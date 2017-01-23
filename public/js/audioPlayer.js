@@ -24,6 +24,7 @@ $(function() {
 		$currentTime = $('.audio-player #current-time'),
 		$duration = $('.audio-player #duration'),
 		$playlistItems = $('.audio-player #playlist li'),
+		$leftPlaylistItems = $('.audio-player.left-player #playlist li'),
 		$activeTrack = $playlistItems.first(),
 		$volume = $('.audio-player #volume'),
 		$progress = $('.audio-player #progress'),
@@ -34,8 +35,16 @@ $(function() {
 	 */
 	function initWavesurfer($element) {
 		var url = $element.data('url');
+
+		console.log($element);
+
+		$('.audio-player.left-player .side').text($element.data('side') + ': ');
+		$('.audio-player.left-player .track').text($element.data('track'));
+		$('.audio-player.left-player .artist').text($element.data('side'));
+
 		wavesurfer.load(url);
 		$activeTrack = $element;
+
 	}
 
 	function timecode(ms) {
@@ -134,7 +143,7 @@ $(function() {
 	/*
 	 *  WaveSurfer Functions
 	 */
-	initWavesurfer($($playlistItems).first());
+	initWavesurfer($($leftPlaylistItems).first());
 
 	wavesurfer.on('ready', function() {
 		$btnPlay.on('click', function() {

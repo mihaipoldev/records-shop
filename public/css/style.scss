@@ -8,6 +8,9 @@ hr {
   border-top: 1px solid #ccc;
 }
 header {
+  position: fixed;
+  z-index: 9999;
+  width: 100%;
   height: 50px;
   line-height: 50px;
   background: #27261f;
@@ -35,6 +38,20 @@ header {
 	}
   }
 }
+.main-content{
+  padding-top: 50px;
+}
+.fixed-side{
+  position: fixed;
+  width: inherit;
+
+}
+.position-relative{
+  position: relative;
+}
+.affix{
+  width: 100%;
+}
 .record-wrapper {
   //position: relative;
   //margin-bottom: 20px;
@@ -42,19 +59,24 @@ header {
   //transition: box-shadow 0.2s;
   //padding: 5px;
   &:hover {
-	box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.3);
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
 	figure {
 	  .image-opacity {
 		opacity: 0;
 	  }
 	}
 	.details {
-	  a {
+	  a.product-name {
 		color: #000;
 		text-decoration: none;
 	  }
 	}
   }
+  //.btn-add {
+	//position: absolute;
+	//right: 5px;
+	//bottom: 5px;
+  //}
   display: flex;
   figure {
 	//flex: 3;
@@ -75,6 +97,38 @@ header {
 	  opacity: 0.1;
 	  background: #fff;
 	}
+	.play-wrapper{
+	  display: block;
+	  //display: none;
+	  position: absolute;
+	  top: 0;
+	  left: 0;
+	  height: 100%;
+	  width: 100%;
+	  text-align: center;
+	  a{
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100%;
+		width: 100%;
+		i{
+		  transition: color 0.3s;
+		  color: transparent;
+		  font-size: 30px;
+		}
+	  }
+	}
+	&:hover{
+	  .play-wrapper{
+		display: block;
+		a{
+		  i{
+			color: #ccc;
+		  }
+		}
+	  }
+	}
 	//&::after {
 	//  content: '';
 	//  position: absolute;
@@ -87,27 +141,45 @@ header {
 	//}
   }
   .details {
+	position: relative;
 	background: #fff;
 	//flex: 7;
 	padding: 5px 10px;
 	width: 70%;
 	//height: 100%;
 	//vertical-align: middle;
-	a {
-	  //line-height: 20px;
-	  font-size: 15px;
-	  color: #444;
-	  transition: color 0.2s;
-	  &:hover {
-		color: #222;
-		text-decoration: none;
+	i.fa-circle{
+	  position: absolute;
+	  top: 5px;
+	  right: 5px;
+	  display: inline-block;
+	  color: #52914a;
+	}
+	.left-bottom{
+	  position: absolute;
+	  bottom: 5px;
+	  right: 5px;
+	  .btn-add{
+		display: inline-block;
+		border-radius: 3px;
+		background: #ddd;
+		//color: #3d7723;
+		color: #333;
+		padding: 0 10px;
+		height: 20px;
+		line-height: 20px;
+		font-size: 12px;
+		transition: color 0.2s;
+		i{
+		  font-size: 16px;
+		}
+		&:hover {
+		  background: #e5e5e5;
+		  text-decoration: none;
+		}
 	  }
 	}
-  }
-  .btn-add {
-	position: absolute;
-	right: 5px;
-	bottom: 5px;
+
   }
 }
 /* Player */
@@ -351,8 +423,20 @@ section.other-releases {
   }
 }
 
+
+footer{
+  background: #ddd;
+  height: 100px;
+  width: 100%;
+  &.to-bottom{
+	position: absolute;
+	bottom: 0;
+  }
+}
+
+
 @media (min-width: 1200px) {
   .container {
-	width: 1170px;
+	width: 1300px;
   }
 }
