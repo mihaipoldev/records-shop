@@ -16,6 +16,10 @@ class CreateRecordsTable extends Migration
             $table->increments('id');
             $table->string('title');
             $table->integer('label_id');
+            $table->string('catalog');
+            $table->date('release_date');
+            $table->string('format');
+            $table->string('image_path');
 	        $table->timestamps();
         });
     }

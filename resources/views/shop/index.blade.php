@@ -18,9 +18,7 @@
                     <div class="record-wrapper">
                         <figure>
                             <a href="#">
-                                @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
-                                    <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
-                                @endif
+                                <img src="{{ asset($record->image_path) }}"/>
                                 <span class="image-opacity"></span>
                             </a>
                             <div class="play-wrapper">
@@ -39,7 +37,7 @@
                                 @endforeach
                             </small>
 
-                            <a href="{{ route('record', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
+                            <a href="{{ route('record.item', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
                             {{--<i class="fa fa-circle"></i>--}}
                             <div class="left-bottom">
                                 <span style="display: inline-block; margin-right: 5px; color: forestgreen">
@@ -62,4 +60,8 @@
             @endforeach
         </section>
     </main>
+@endsection
+
+@section('player')
+    @include ('includes.player', ['record' => \App\Models\Record::all()[1]])
 @endsection

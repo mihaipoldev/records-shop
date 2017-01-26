@@ -12,6 +12,11 @@ class Artist extends Model
 
     public function records()
     {
-    	return $this->hasMany('App\Models\Record');
+    	return $this->belongsToMany('App\Models\Record');
+    }
+
+    public function toArray()
+    {
+	    return $this->name;
     }
 }

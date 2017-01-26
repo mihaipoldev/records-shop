@@ -1,5 +1,11 @@
+{{--{{ dd($record) }}--}}
+
 <div class="audio-player left-player">
     <div>
+        <h3>
+            {{ $record->title }}
+        </h3>
+
         <h4>
             <span class="side"></span>
             <a class="track"></a>
@@ -49,3 +55,8 @@
     </ul>
     {{--<canvas id="analyser_render"></canvas>--}}
 </div>
+
+@section('player_js')
+    <script src="{{ URL::to('js/wavesurfer.js') }}"></script>
+    <script src="{{ URL::to('js/audioPlayer.js') }}"></script>
+@endsection

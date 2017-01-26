@@ -23,7 +23,7 @@
                     <div class="affix right-side-fixed">
                         <div class="player-wrapper">
                             <div class="player">
-                                @include ('includes.player')
+                                @yield('player')
                             </div>
                         </div>
                     </div>
@@ -66,6 +66,7 @@
             } );
         </script>
 
+        @yield('player_js')
         @yield('extra_js')
     </body>
 </html>

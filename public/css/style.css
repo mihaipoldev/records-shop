@@ -18,12 +18,26 @@
     padding-right: 5px;
     padding-left: 5px; }
 
+/** Japanese garden */
+/* NOT FOR THIS SITE */
+/** sandy stone beach ocean diver */
+/** Phaedra */
+/** quiet gry */
+/** Birdfolio Blues */
+/** Aspirin C */
+/** Vitamin C */
 body {
   background: #eee; }
 
 hr {
   margin: 10px 0;
   border-top: 1px solid #ccc; }
+
+a {
+  font-weight: 600;
+  color: #555; }
+  a:hover {
+    color: #284907; }
 
 header {
   position: fixed;
@@ -35,14 +49,14 @@ header {
   header .navbar-brand {
     line-height: 50px;
     padding: 0 15px;
-    color: #aaa;
-    transition: color 0.5s; }
+    color: #5C832F;
+    transition: color 0.15s; }
     header .navbar-brand:hover {
-      color: #fff; }
+      color: #699636; }
   header .navbar-right li a {
     background: transparent !important;
     color: #aaa;
-    transition: color 0.5s; }
+    transition: color 0.15s; }
     header .navbar-right li a:hover, header .navbar-right li a:focus {
       color: #fff; }
 
@@ -60,6 +74,7 @@ header {
   width: 100%; }
 
 .record-wrapper {
+  margin-bottom: 10px;
   display: flex; }
   .record-wrapper:hover {
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); }
@@ -98,7 +113,7 @@ header {
         height: 100%;
         width: 100%; }
         .record-wrapper figure .play-wrapper a i {
-          transition: color 0.3s;
+          transition: color 0.2s;
           color: transparent;
           font-size: 30px; }
     .record-wrapper figure:hover .play-wrapper {
@@ -233,7 +248,8 @@ section.item {
 
 section.other-releases {
   background: #f5f5f5;
-  padding: 20px 0; }
+  padding: 20px 0;
+  margin-bottom: 20px; }
 
 .player-wrapper {
   margin-top: 40px;
@@ -296,7 +312,7 @@ section.other-releases {
       line-height: 20px;
       height: 20px; }
   .chart-wrapper a.btn {
-    background: #1a2d40;
+    background: #363942;
     margin-left: 10px;
     float: left;
     height: 30px;

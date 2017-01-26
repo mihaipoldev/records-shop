@@ -11,9 +11,7 @@
             <div class="row">
                 <div class="col-sm-4 image-column">
                     <figure>
-                        @if(Storage::disk('local')->has('records/' . strtolower($record->title)))
-                            <img src="{{ route('record.image', ['title' => strtolower($record->title)]) }}"/>
-                        @endif
+                            <img src="{{ asset($record->image_path) }}"/>
                         {{--<img src="{{ asset('img/records/mihai-pol-goneta/artwork.jpg') }}" alt="artwork"/>--}}
                     </figure>
                 </div>
@@ -27,19 +25,20 @@
                             @endforeach
                         </p>
                         <p>
-                            <small>label:</small> <a href="#label-releases">{{ $record->label->name }}</a>
+                            <small>label:</small>
+                            <a href="#label-releases">{{ $record->label->name }}</a>
                         </p>
                         <p>
                             <small>catalog:</small>
-                            [CAP001]!
+                            {{ $record->catalog }}
                         </p>
                         <p>
                             <small>release date:</small>
-                            20/10/2016
+                            {{ date('d.m.Y', strtotime($record->release_date)) }}
                         </p>
                         <p>
                             <small>format:</small>
-                            12"
+                            {{ $record->format }}
                         </p>
                     </div>
 
@@ -117,7 +116,7 @@
                                                 {{ $artist->name }}
                                             @endforeach
                                         </small>
-                                        <a href="{{ route('record', ['id'=>$labelRecord->id]) }}" class="product-name"> {{ $labelRecord->title }}</a>
+                                        <a href="{{ route('record.item', ['id'=>$labelRecord->id]) }}" class="product-name"> {{ $labelRecord->title }}</a>
 
                                         <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
 
@@ -129,10 +128,55 @@
                 </div>
             </div>
         </section>
+
+        @foreach($record->artists as $artist)
+            <section class="other-releases" id="artist-{{ $artist }}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <h3>Other releases from <b>{{ $artist->name }}</b></h3>
+                        </div>
+                    </div>
+                    <div class="row">
+                        @foreach($artist->records as $artistRecord)
+                            @if($artistRecord->id != $record->id)
+                                <div class="col-md-3">
+                                    <div class="record-wrapper">
+                                        <figure>
+                                            <a href="#">
+                                                @if(Storage::disk('local')->has('records/' . strtolower($artistRecord->title)))
+                                                    <img src="{{ route('record.image', ['title' => strtolower($artistRecord->title)]) }}"/>
+                                                @endif
+                                                <span class="image-opacity"></span>
+                                            </a>
+                                        </figure>
+                                        <div class="details">
+
+
+                                            <small class="text-muted">
+                                                @foreach($artistRecord->artists as $index => $artist)
+                                                    @if($index != 0)
+                                                        ,
+                                                    @endif
+                                                    {{ $artist->name }}
+                                                @endforeach
+                                            </small>
+                                            <a href="{{ route('record.item', ['id'=>$artistRecord->id]) }}" class="product-name"> {{ $artistRecord->title }}</a>
+
+                                            <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            @endif
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+        @endforeach
     </main>
 @endsection
 
-@section('extra_js')
-    <script src="{{ URL::to('js/wavesurfer.js') }}"></script>
-    <script src="{{ URL::to('js/audioPlayer.js') }}"></script>
+@section('player')
+    @include ('includes.player', ['record' => $record])
 @endsection
