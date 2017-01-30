@@ -96,32 +96,7 @@
                     @foreach($record->label->records as $labelRecord)
                         @if($labelRecord->id != $record->id)
                             <div class="col-md-3">
-                                <div class="record-wrapper">
-                                    <figure>
-                                        <a href="#">
-                                            @if(Storage::disk('local')->has('records/' . strtolower($labelRecord->title)))
-                                                <img src="{{ route('record.image', ['title' => strtolower($labelRecord->title)]) }}"/>
-                                            @endif
-                                            <span class="image-opacity"></span>
-                                        </a>
-                                    </figure>
-                                    <div class="details">
-
-
-                                        <small class="text-muted">
-                                            @foreach($labelRecord->artists as $index => $artist)
-                                                @if($index != 0)
-                                                    ,
-                                                @endif
-                                                {{ $artist->name }}
-                                            @endforeach
-                                        </small>
-                                        <a href="{{ route('record.item', ['id'=>$labelRecord->id]) }}" class="product-name"> {{ $labelRecord->title }}</a>
-
-                                        <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
-
-                                    </div>
-                                </div>
+                                @include('shop.list.normal', ['record' => $labelRecord])
                             </div>
                         @endif
                     @endforeach
@@ -141,32 +116,7 @@
                         @foreach($artist->records as $artistRecord)
                             @if($artistRecord->id != $record->id)
                                 <div class="col-md-3">
-                                    <div class="record-wrapper">
-                                        <figure>
-                                            <a href="#">
-                                                @if(Storage::disk('local')->has('records/' . strtolower($artistRecord->title)))
-                                                    <img src="{{ route('record.image', ['title' => strtolower($artistRecord->title)]) }}"/>
-                                                @endif
-                                                <span class="image-opacity"></span>
-                                            </a>
-                                        </figure>
-                                        <div class="details">
-
-
-                                            <small class="text-muted">
-                                                @foreach($artistRecord->artists as $index => $artist)
-                                                    @if($index != 0)
-                                                        ,
-                                                    @endif
-                                                    {{ $artist->name }}
-                                                @endforeach
-                                            </small>
-                                            <a href="{{ route('record.item', ['id'=>$artistRecord->id]) }}" class="product-name"> {{ $artistRecord->title }}</a>
-
-                                            <a href="#" class="btn pull-right" style="padding: 0 10px; height: 20px; line-height: 20px;">Add to chart <i class="fa fa-long-arrow-right"></i> </a>
-
-                                        </div>
-                                    </div>
+                                    @include('shop.list.normal', ['record' => $artistRecord])
                                 </div>
                             @endif
                         @endforeach
