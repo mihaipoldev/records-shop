@@ -7,6 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Record extends Model
 {
 	protected $fillable = [
+		'title',
+		'label_id',
+		'catalog',
+		'title',
 		'title'
 	];
 

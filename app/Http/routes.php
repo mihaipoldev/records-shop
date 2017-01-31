@@ -11,11 +11,31 @@
 |
 */
 
-use App\Models\Track;
+/**
+ * Redirect
+ */
+Route::get('/', function(){
+	return redirect()->route('record.list');
+});
 
-Route::get('/', function() {
-	return view('shop.index');
-})->name('index');
+/**
+ * Records
+ */
+
+
+Route::group(['prefix' => '/records'], function() {
+	Route::get('/', [
+		'uses' => 'RecordController@getList',
+		'as'   => 'record.list',
+	]);
+
+	Route::get('{id}', [
+		'uses' => 'RecordController@getItem',
+		'as'   => 'record.item',
+	]);
+});
+
+
 Route::get('/login', function() {
 	return view('user.login');
 });
@@ -25,9 +45,8 @@ Route::get('/record-image/{title}', function($title) {
 	return new Illuminate\Http\Response($file, 200);
 })->name('record.image');
 
-Route::get('/record/{id}', function($id) {
-	return view('shop.record', ['record'=>\App\Models\Record::find($id)]);
-})->name('record');
+
+use App\Models\Track;
 
 Route::post('/record-analyser', function(\Illuminate\Http\Request $request) {
 	$track = Track::where('title', 'Goneta')->first();
@@ -41,10 +60,11 @@ Route::post('/record-analyser', function(\Illuminate\Http\Request $request) {
 Route::get('/record-analyser/{id}', function($id) {
 	$track = Track::where('title', 'Goneta')->first();
 	$array = explode(' ', $track->player_analyser);
-	foreach ($array as $key => $value){
+	foreach ($array as $key => $value) {
 		$array[$key] = intval(round($value));
 	}
+
 	// dd($array);die;
 
-	return view('shop.record-analyser', ['track'=>$track, 'array'=>$array]);
+	return view('shop.record-analyser', ['track' => $track, 'array' => $array]);
 })->name('record.analyser.player');

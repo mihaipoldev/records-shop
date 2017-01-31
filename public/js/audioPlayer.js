@@ -40,7 +40,7 @@ $(function() {
 
 		$('.audio-player.left-player .side').text($element.data('side') + ': ');
 		$('.audio-player.left-player .track').text($element.data('track'));
-		$('.audio-player.left-player .artist').text($element.data('side'));
+		$('.audio-player.left-player .artist').text($element.data('artist'));
 
 		wavesurfer.load(url);
 		$activeTrack = $element;
