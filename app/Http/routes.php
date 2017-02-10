@@ -14,15 +14,13 @@
 /**
  * Redirect
  */
-Route::get('/', function(){
+Route::get('/', function() {
 	return redirect()->route('record.list');
 });
 
 /**
  * Records
  */
-
-
 Route::group(['prefix' => '/records'], function() {
 	Route::get('/', [
 		'uses' => 'RecordController@getList',
@@ -34,6 +32,26 @@ Route::group(['prefix' => '/records'], function() {
 		'as'   => 'record.item',
 	]);
 });
+
+/**
+ * Admin
+ */
+// Route::group(['middleware' => 'auth'], function() {
+	Route::group(['prefix' => '/admin'], function() {
+		Route::get('/', [
+			'uses' => 'Admin\IndexController@getIndex',
+			'as'   => 'admin.index',
+		]);
+		Route::get('/records/add', [
+			'uses' => 'Admin\RecordController@getAdd',
+			'as'   => 'admin.records.add',
+		]);
+		Route::get('/records/edit/{id}', [
+			'uses' => 'Admin\RecordController@getEdit',
+			'as'   => 'admin.records.edit',
+		]);
+	});
+// });
 
 
 Route::get('/login', function() {
@@ -60,7 +78,7 @@ Route::post('/record-analyser', function(\Illuminate\Http\Request $request) {
 Route::get('/record-analyser/{id}', function($id) {
 	$track = Track::where('title', 'Goneta')->first();
 	$array = explode(' ', $track->player_analyser);
-	foreach ($array as $key => $value) {
+	foreach($array as $key => $value) {
 		$array[$key] = intval(round($value));
 	}
 

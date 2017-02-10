@@ -20,7 +20,7 @@
             @endforeach
         </small>
 
-        <a href="{{ route('record.item', ['id'=>$record->id]) }}" class="product-name"> {{ $record->title }}</a>
+        <a href="{{ route('record.item', ['id'=>$record->id]) }}" class="product-name"> {{ $record->name }}</a>
         {{--<i class="fa fa-circle"></i>--}}
         <div class="left-bottom">
                                 <span style="display: inline-block; margin-right: 5px; color: forestgreen">

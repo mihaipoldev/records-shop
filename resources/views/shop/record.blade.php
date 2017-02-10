@@ -16,7 +16,7 @@
                     </figure>
                 </div>
                 <div class="col-sm-8 content">
-                    <h2>{{ $record->title }} EP</h2>
+                    <h2>{{ $record->name }} EP</h2>
                     <div class="info-wrapper">
                         <p>
                             <small>artists:</small>

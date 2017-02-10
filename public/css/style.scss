@@ -435,12 +435,21 @@ section.other-releases {
 	}
 }
 footer {
+	padding: 20px 0;
 	background: #ddd;
-	height: 100px;
 	width: 100%;
+	text-align: center;
 	&.to-bottom {
 		position: absolute;
 		bottom: 0;
+	}
+	ul{
+		text-align: center;
+		padding: 0;
+		display: inline-block;
+		li{
+			list-style: none;
+		}
 	}
 }
 @media (min-width: 1200px) {

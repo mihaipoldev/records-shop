@@ -331,12 +331,19 @@ section.other-releases {
     color: #999; }
 
 footer {
+  padding: 20px 0;
   background: #ddd;
-  height: 100px;
-  width: 100%; }
+  width: 100%;
+  text-align: center; }
   footer.to-bottom {
     position: absolute;
     bottom: 0; }
+  footer ul {
+    text-align: center;
+    padding: 0;
+    display: inline-block; }
+    footer ul li {
+      list-style: none; }
 
 @media (min-width: 1200px) {
   .container {
