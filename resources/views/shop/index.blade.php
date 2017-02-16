@@ -24,5 +24,5 @@
 @endsection
 
 @section('player')
-    @include ('includes.player', ['record' => \App\Models\Record::all()[1]])
+    @include ('includes.player', ['record' => \App\Models\Record::all()[0]])
 @endsection

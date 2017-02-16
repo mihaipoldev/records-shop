@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\Helper;
 use App\Models\Artist;
 use Illuminate\Database\Seeder;
 
@@ -10,20 +11,45 @@ class ArtistTableSeeder extends Seeder
 	 *
 	 * @return void
 	 */
-	public function run()
-	{
-		DB::table('artists')->delete();
+	public function run() {
+		$name = 'Mihai Pol';
+		Artist::create([
+			'name' => $name,
+			'slug' => Helper::slugify($name),
+		]);
 
-		$artist = new Artist();
-		$artist->name = 'Cristi Cons';
-		$artist->save();
+		$name = 'Suciu';
+		Artist::create([
+			'name' => $name,
+			'slug' => Helper::slugify($name),
+		]);
 
-		$artist = new Artist();
-		$artist->name = 'Mihai Pol';
-		$artist->save();
+		$name = 'Cristi Cons';
+		Artist::create([
+			'name' => $name,
+			'slug' => Helper::slugify($name),
+		]);
 
-		$artist = new Artist();
-		$artist->name = 'Suolo';
-		$artist->save();
+		$name = 'Vlad Caia';
+		Artist::create([
+			'name' => $name,
+			'slug' => Helper::slugify($name),
+		]);
+
+		$name = 'Sit';
+		Artist::create([
+			'name' => $name,
+			'band' => true,
+			'slug' => Helper::slugify($name),
+		])->artists()->saveMany([
+			Artist::where('name', 'Cristi Cons')->first(),
+			Artist::where('name', 'Vlad Caia')->first(),
+		]);
+
+		$name = 'Vlad Radu';
+		Artist::create([
+			'name' => $name,
+			'slug' => Helper::slugify($name),
+		]);
 	}
 }

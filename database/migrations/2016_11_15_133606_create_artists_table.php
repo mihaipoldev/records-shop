@@ -5,27 +5,30 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateArtistsTable extends Migration
 {
-    /**
-     * Run the migrations.
-     *
-     * @return void
-     */
-    public function up()
-    {
-        Schema::create('artists', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-	        $table->timestamps();
-        });
-    }
+	/**
+	 * Run the migrations.
+	 *
+	 * @return void
+	 */
+	public function up()
+	{
+		Schema::create('artists', function(Blueprint $table) {
+			$table->increments('id');
+			$table->string('name');
+			$table->boolean('band')->nullable()->default(0);
+			$table->string('slug')->nullable();
+			$table->timestamps();
+			$table->softDeletes();
+		});
+	}
 
-    /**
-     * Reverse the migrations.
-     *
-     * @return void
-     */
-    public function down()
-    {
-        Schema::drop('artists');
-    }
+	/**
+	 * Reverse the migrations.
+	 *
+	 * @return void
+	 */
+	public function down()
+	{
+		Schema::drop('artists');
+	}
 }
