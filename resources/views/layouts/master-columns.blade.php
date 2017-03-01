@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     </head>
-    <body>
+    <body @yield('body_color')>
 
         @include('includes.header')
         <div class="container main-content">
@@ -51,7 +51,7 @@
 
                 function setFooterPosition(){
                     /* window - header - footer */
-                    var contentMinHeight = $( window ).height() - 50 - 100,
+                    var contentMinHeight = $( window ).height() - 50 - 122,
                             mainHeight = $( 'main' ).height();
 
                     if( contentMinHeight > mainHeight ){

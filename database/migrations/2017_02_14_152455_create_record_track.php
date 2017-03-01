@@ -16,7 +16,7 @@ class CreateRecordTrack extends Migration
 			$table->increments('id');
 			$table->integer('record_id')->unsigned();
 			$table->integer('track_id')->unsigned();
-			$table->integer('order')->nullable();
+			$table->integer('order')->nullable()->default(0);
 			$table->timestamps();
 
 			$table->foreign('record_id')

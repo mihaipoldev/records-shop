@@ -27,7 +27,7 @@ Route::group(['prefix' => '/records'], function() {
 		'as'   => 'record.list',
 	]);
 
-	Route::get('{id}', [
+	Route::get('/{id}', [
 		'uses' => 'RecordController@getItem',
 		'as'   => 'record.item',
 	]);
@@ -43,11 +43,11 @@ Route::group(['prefix' => '/records'], function() {
 			'as'   => 'admin.index',
 		]);
 		Route::get('/records/add', [
-			'uses' => 'Admin\RecordController@getAdd',
+			'uses' => 'Admin\RecordController@editor',
 			'as'   => 'admin.records.add',
 		]);
 		Route::get('/records/edit/{id}', [
-			'uses' => 'Admin\RecordController@getEdit',
+			'uses' => 'Admin\RecordController@editor',
 			'as'   => 'admin.records.edit',
 		]);
 	});

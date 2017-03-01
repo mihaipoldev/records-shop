@@ -91,20 +91,20 @@
 											{{ $product->name }}
 										</td>
 										<td>
-											{{ 'art' . $product->catalog }}
+											{{ $product->displayArtists() }}
 										</td>
 										<td>
 											{{ $product->label->name . ' [' . $product->catalog . ']' }}
 										</td>
 										<td>
-											{{ date('Y-m-d', strtotime($product->release_date)) }}
+											{{ date('d F Y', strtotime($product->release_date)) }}
 										</td>
 										<td>
 											&euro; {{ $product->price }}
 										</td>
 										<td>
-											@if($product->quantity > 0)
-												<span style="color: green">{{ $product->quantity }}</span>
+											@if($product->stock > 0)
+												<span style="color: green">{{ $product->stock }}</span>
 											@else
 												<span style="color: red">out of stock</span>
 											@endif

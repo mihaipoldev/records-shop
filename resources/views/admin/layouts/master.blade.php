@@ -15,21 +15,10 @@
 
 		<link href="{{ asset('libs/inspinia/css/animate.css') }}" rel="stylesheet">
 		<link href="{{ asset('libs/inspinia/css/style.css') }}" rel="stylesheet">
+		<link href="{{ asset('css/admin-style.css') }}" rel="stylesheet">
 
-		<link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
+		<link href="{{ asset( 'libs/inspinia/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css') }}" rel="stylesheet"/>
 		@yield('styles')
-
-	<!-- Mainly scripts -->
-		<script src="{{ asset('libs/inspinia/js/jquery-2.1.1.js') }}"></script>
-		<script src="{{ asset('libs/inspinia/js/jquery-ui-1.10.4.min.js') }}"></script>
-		<script src="{{ asset('libs/inspinia/js/bootstrap.min.js') }}"></script>
-		<script src="{{ asset('libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-		<script src="{{ asset('libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-		<!-- Custom and plugin javascript -->
-		<script src="{{ asset('libs/inspinia/js/inspinia.js') }}"></script>
-		<script src="{{ asset('libs/inspinia/js/plugins/pace/pace.min.js') }}"></script>
 
 		@yield('head_js')
 	</head>
@@ -86,6 +75,14 @@
 			</div>
 		</div>
 
+
+
+		<script src="{{ asset( 'libs/inspinia/js/jquery-2.1.1.js' ) }}"></script>
+		<script src="{{ asset( 'libs/inspinia/js/bootstrap.min.js' ) }}"></script>
+		<script src="{{ asset( 'libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js' ) }}"></script>
+		<script src="{{ asset( 'libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js' ) }}"></script>
+		<script src="{{ asset( 'libs/inspinia/js/inspinia.js' ) }}"></script>
+		<script src="{{ asset( 'libs/inspinia/js/plugins/pace/pace.min.js' ) }}"></script>
 
 		@yield('scripts')
 	</body>

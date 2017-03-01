@@ -25,24 +25,38 @@ class Record extends Model
 
 	protected $dates = ['deleted_at'];
 
-	public function label()
-	{
+	public function label() {
 		return $this->belongsTo('App\Models\Label');
 	}
 
-	public function artists()
-	{
+	public function artists() {
 		return $this->belongsToMany('App\Models\Artist', 'record_artist')
+			->orderBy('record_artist.order', 'asc')
 			->withPivot('record_id', 'artist_id', 'remix', 'order');
 	}
 
-	public function tracks()
-	{
+	public function tracks() {
 		return $this->hasMany('App\Models\Track');
 	}
 
-	public function __toString()
-	{
+
+	public function displayArtists() {
+		$result = '';
+		foreach($this->artists as $index => $artist){
+			if($index){
+				$result .= ', ';
+			}
+			$result .= $artist;
+		}
+		return $result;
+	}
+
+	public function displayAll() {
+
+	}
+
+
+	public function __toString() {
 		return $this->name;
 	}
 }

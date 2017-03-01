@@ -31,6 +31,17 @@ class Track extends Model
 			->withPivot('track_id', 'artist_id', 'remix', 'order');
 	}
 
+	public function artistsDisplay(){
+		$display = '';
+		foreach($this->artists as $index => $artist){
+			if($index != 0){
+				$display .= ', ';
+			}
+			$display .= $artist;
+		}
+		return $display;
+	}
+
 	public function __toString() {
 		return $this->name;
 	}

@@ -16,7 +16,7 @@ class CreateRecordArtist extends Migration
 			$table->increments('id');
 			$table->integer('record_id')->unsigned();
 			$table->integer('artist_id')->unsigned();
-			$table->integer('order')->nullable();
+			$table->integer('order')->nullable()->default(0);
 			$table->boolean('remix')->nullable()->default(false);
 			$table->timestamps();
 

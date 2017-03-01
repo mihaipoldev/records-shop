@@ -7,22 +7,25 @@ use App\Models\Record;
 
 class RecordController extends Controller
 {
-	public function getIndex()
-	{
+	public function getIndex() {
 		return view('admin.index', [
-			'products' => Record::all(),
+			'products' => Record::orderBy('release_date', 'desc')->get(),
 		]);
 	}
 
-	public function getAdd()
-	{
-		return view('admin.records.add');
-	}
+	public function editor($id = null) {
+		$record = null;
 
-	public function getEdit($id)
-	{
-		return view('admin.records.edit', [
-			'record'=>Record::find($id)
+		if($id) {
+			$record = Record::find($id);
+		}
+
+		if(!$record) {
+			$record = new Record();
+		}
+
+		return view('admin.records.editor', [
+			'record' => $record,
 		]);
 	}
 }

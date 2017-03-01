@@ -16,8 +16,8 @@ class CreateTrackArtist extends Migration
 			$table->increments('id');
 			$table->integer('track_id')->unsigned();
 			$table->integer('artist_id')->unsigned();
+			$table->integer('order')->nullable()->default(0);
 			$table->boolean('remix')->nullable()->default(false);
-			$table->integer('order')->nullable();
 			$table->timestamps();
 
 			$table->foreign('track_id')

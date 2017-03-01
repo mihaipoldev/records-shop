@@ -8,11 +8,14 @@ $(function() {
 	/*
 	 *  Variables
 	 */
+	var color = 'rgb(' + $('main').data('color0') + ',' + $('main').data('color1') + ',' + $('main').data('color2') +')';
+	var color1 = 'rgb(' + $('main').data('color10') + ',' + $('main').data('color11') + ',' + $('main').data('color12') +')';
+
 	var wavesurfer = WaveSurfer.create({
 		container: '#waveform',
 		height: 40,
-		waveColor: '#999',
-		progressColor: '#555',
+		waveColor: color,
+		progressColor: color1,
 		cursorColor: '#555',
 	});
 
@@ -129,7 +132,7 @@ $(function() {
 		$('#playlist li .item.active').removeClass('active');
 		$element.find('.item').addClass('active');
 
-		if (wavesurfer.isPlaying()) {
+		if (wavesurfer.isPaused()) {
 			play();
 		}
 	}

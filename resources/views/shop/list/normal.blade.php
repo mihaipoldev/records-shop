@@ -25,7 +25,7 @@
             <span style="display: inline-block; margin-right: 5px; color: forestgreen">
                 <em>in stock</em>
             </span>
-			<a href="#" class="btn-add pull-right">&euro; {{ $record->label_id }} <i class="fa fa-cart-plus"></i> </a>
+			<a href="#" class="btn-add pull-right">&euro; {{ $record->price }} <i class="fa fa-cart-plus"></i> </a>
 		</div>
 	</div>
 </div>

@@ -13,7 +13,7 @@
                 <h3>All Records</h3>
             </div>
 
-            @foreach(\App\Models\Record::all() as $record)
+            @foreach($records as $record)
                 <div class="col-md-4">
                     @include('shop.list.normal', ['record' => $record])
                 </div>
