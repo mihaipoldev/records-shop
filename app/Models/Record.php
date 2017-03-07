@@ -36,7 +36,7 @@ class Record extends Model
 	}
 
 	public function tracks() {
-		return $this->hasMany('App\Models\Track');
+		return $this->hasMany('App\Models\Track')->orderBy('side')->where('draft', false);
 	}
 
 

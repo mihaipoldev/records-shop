@@ -25,6 +25,7 @@ class CreateRecordsTable extends Migration
 			$table->string('price')->nullable();
 			$table->integer('stock')->nullable();
 			$table->boolean('online')->nullable()->default(false);
+			$table->boolean('draft')->nullable()->default(false);
 			$table->timestamps();
 			$table->softDeletes();
 

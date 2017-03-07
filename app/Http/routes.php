@@ -37,20 +37,43 @@ Route::group(['prefix' => '/records'], function() {
  * Admin
  */
 // Route::group(['middleware' => 'auth'], function() {
-	Route::group(['prefix' => '/admin'], function() {
-		Route::get('/', [
-			'uses' => 'Admin\IndexController@getIndex',
-			'as'   => 'admin.index',
-		]);
-		Route::get('/records/add', [
-			'uses' => 'Admin\RecordController@editor',
-			'as'   => 'admin.records.add',
-		]);
-		Route::get('/records/edit/{id}', [
-			'uses' => 'Admin\RecordController@editor',
-			'as'   => 'admin.records.edit',
-		]);
-	});
+Route::group(['prefix' => '/admin'], function() {
+	Route::get('/', [
+		'uses' => 'Admin\IndexController@getIndex',
+		'as'   => 'admin.index',
+	]);
+
+	Route::get('/records/add', [
+		'uses' => 'Admin\RecordController@add',
+		'as'   => 'admin.records.add',
+	]);
+
+	Route::get('/record/{id}', [
+		'uses' => 'Admin\RecordController@editor',
+		'as'   => 'admin.records.edit',
+	])
+	->where('id', '[0-9]+');
+
+
+	/** track */
+	Route::get('/track/add/to-{record_id}', [
+		'uses' => 'Admin\TrackController@add',
+		'as'   => 'ajax.admin.track.add',
+	]);
+
+	Route::get('/track/{track_id}/save', [
+		'uses' => 'Admin\TrackController@ajaxEditor',
+		'as'   => 'ajax.admin.track.save',
+	])
+	->where('track_id', '[0-9]+');
+
+	Route::post('/track/{track_id}/save', [
+		'uses' => 'Admin\TrackController@ajaxSave',
+		'as'   => 'ajax.admin.track.save',
+	])
+	->where('track_id', '[0-9]+')
+	->where('record_id', '[0-9]+');
+});
 // });
 
 

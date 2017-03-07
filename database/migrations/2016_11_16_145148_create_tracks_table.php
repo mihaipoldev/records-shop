@@ -22,6 +22,7 @@ class CreateTracksTable extends Migration
 			$table->string('wave')->nullable();
 			$table->string('length')->nullable();
 			$table->string('bpm')->nullable();
+			$table->boolean('draft')->nullable()->default(false);
 			$table->timestamps();
 			$table->softDeletes();
 
