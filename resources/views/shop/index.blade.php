@@ -13,7 +13,7 @@
                 <h3>All Records</h3>
             </div>
 
-            @foreach(\App\Models\Record::all() as $record)
+            @foreach($records as $record)
                 <div class="col-md-4">
                     @include('shop.list.normal', ['record' => $record])
                 </div>
@@ -24,5 +24,5 @@
 @endsection
 
 @section('player')
-    @include ('includes.player', ['record' => \App\Models\Record::all()[1]])
+    @include ('includes.player', ['record' => \App\Models\Record::all()[0]])
 @endsection

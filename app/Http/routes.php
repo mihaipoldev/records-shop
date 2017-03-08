@@ -14,26 +14,77 @@
 /**
  * Redirect
  */
-Route::get('/', function(){
+Route::get('/', function() {
 	return redirect()->route('record.list');
 });
 
 /**
  * Records
  */
-
-
 Route::group(['prefix' => '/records'], function() {
 	Route::get('/', [
 		'uses' => 'RecordController@getList',
 		'as'   => 'record.list',
 	]);
 
-	Route::get('{id}', [
+	Route::get('/{id}', [
 		'uses' => 'RecordController@getItem',
 		'as'   => 'record.item',
 	]);
 });
+
+/**
+ * Admin
+ */
+// Route::group(['middleware' => 'auth'], function() {
+Route::group(['prefix' => '/admin'], function() {
+	Route::get('/', [
+		'uses' => 'Admin\IndexController@getIndex',
+		'as'   => 'admin.index',
+	]);
+
+	Route::get('/records/add', [
+		'uses' => 'Admin\RecordController@add',
+		'as'   => 'admin.records.add',
+	]);
+
+	Route::get('/record/{id}', [
+		'uses' => 'Admin\RecordController@editor',
+		'as'   => 'admin.records.edit',
+	])
+	->where('id', '[0-9]+');
+
+
+	/** track */
+	Route::get('/track/add/to-{record_id}', [
+		'uses' => 'Admin\TrackController@add',
+		'as'   => 'ajax.admin.track.add',
+	]);
+
+	Route::get('/track/{track_id}/save', [
+		'uses' => 'Admin\TrackController@ajaxEditor',
+		'as'   => 'ajax.admin.track.save',
+	])
+	->where('track_id', '[0-9]+');
+
+	Route::post('/track/{track_id}/save', [
+		'uses' => 'Admin\TrackController@ajaxSave',
+		'as'   => 'ajax.admin.track.save',
+	])
+	->where('track_id', '[0-9]+');
+
+
+	Route::post('/record/{record_id}/save-tracks', [
+		'uses' => 'Admin\RecordController@ajaxSaveTracks',
+		'as'   => 'ajax.admin.track.save.many',
+	])
+	->where('record_id', '[0-9]+');
+});
+
+Route::post('/save-image', function(Illuminate\Http\Request $request){
+	dd($request['src']);
+})->name('save.image');
+// });
 
 
 Route::get('/login', function() {
@@ -60,7 +111,7 @@ Route::post('/record-analyser', function(\Illuminate\Http\Request $request) {
 Route::get('/record-analyser/{id}', function($id) {
 	$track = Track::where('title', 'Goneta')->first();
 	$array = explode(' ', $track->player_analyser);
-	foreach ($array as $key => $value) {
+	foreach($array as $key => $value) {
 		$array[$key] = intval(round($value));
 	}
 
