@@ -71,9 +71,19 @@ Route::group(['prefix' => '/admin'], function() {
 		'uses' => 'Admin\TrackController@ajaxSave',
 		'as'   => 'ajax.admin.track.save',
 	])
-	->where('track_id', '[0-9]+')
+	->where('track_id', '[0-9]+');
+
+
+	Route::post('/record/{record_id}/save-tracks', [
+		'uses' => 'Admin\RecordController@ajaxSaveTracks',
+		'as'   => 'ajax.admin.track.save.many',
+	])
 	->where('record_id', '[0-9]+');
 });
+
+Route::post('/save-image', function(Illuminate\Http\Request $request){
+	dd($request['src']);
+})->name('save.image');
 // });
 
 

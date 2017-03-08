@@ -14,16 +14,25 @@ class TrackController extends Controller
 	 * Ajax add a draft track or use an existing one
 	 */
 	public function add($record_id){
-		$track = Track::where('draft', true)->first();
+		$date = new \DateTime;
+		$date->modify('-10 minutes');
+		$formatted_date = $date->format('Y-m-d H:i:s');
+		$track = Track::where('draft', true)->where('updated_at', '<=', $formatted_date)->first();
+
 		// $track = Track::where('draft', true)->whereDay('updated_at', '!=', date('d'))->first();
 
 		if(!$track) {
 			$track = new Track();
 			$track->draft = true;
+
+			$track->record_id = $record_id;
+			$track->save();
+		}else{
+			$track->record_id = $record_id;
+			$track->touch();
+			$track->update();
 		}
 
-		$track->record_id = $record_id;
-		$track->save();
 
 		return redirect()->route('ajax.admin.track.save', [
 			'track_id' => $track->id,

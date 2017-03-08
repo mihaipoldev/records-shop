@@ -1,12 +1,12 @@
 <div class="panel panel-default">
 	<div class="panel-heading">
 		<h4 class="panel-title">
-			<a data-toggle="collapse" data-parent="#accordion" href="#track{{ $index }}">{{ $track->name ? $track->name : 'Track' . $index }}</a>
+			<a data-toggle="collapse" data-parent="#accordion" href="#track{{ $index }}">{{ $track->name ? $track->name : 'Track' . $track->id }}</a>
 		</h4>
 	</div>
 
 	<div id="track{{ $index }}" class="panel-collapse collapse" style="padding: 10px;">
-		<form method="post" action="{{ route('ajax.admin.track.save', ['track_id' => $track->id]) }}" autocomplete="off" enctype="multipart/form-data">
+{{--		<form method="post" action="{{ route('ajax.admin.track.save', ['track_id' => $track->id]) }}" autocomplete="off" enctype="multipart/form-data">--}}
 			<div class="row">
 				<div class="col-md-6">
 					<div class="form-group">
@@ -63,13 +63,12 @@
 				</div>
 				{{--poate fac ceva in gen (dadsada X), (sdasda (remix) X) + --}}
 
-				<div class="form-group">
-					<div class="col-sm-4 col-sm-offset-8">
-						<button class="btn btn-primary pull-right" type="submit">Save changes</button>
-					</div>
-				</div>
+				{{--<div class="form-group">--}}
+					{{--<div class="col-sm-4 col-sm-offset-8">--}}
+						{{--<button class="btn btn-primary pull-right" type="submit">Save changes</button>--}}
+					{{--</div>--}}
+				{{--</div>--}}
 			</div>
-			{{ csrf_field() }}
 		</form>
 	</div>
 </div>

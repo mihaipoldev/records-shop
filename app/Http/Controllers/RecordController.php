@@ -14,7 +14,7 @@ class RecordController extends Controller
 		// $record = Record::find(1);
 		// dd(Helper::slugify($record->name . '-' . $record->catalog));
 
-		$records = Record::orderBy('release_date', 'desc')->get();
+		$records = Record::where('draft', 0)->orderBy('release_date', 'desc')->get();
 
 		return view('shop.index', [
 			'records' => $records,

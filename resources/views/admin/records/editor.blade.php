@@ -151,24 +151,103 @@
 
 					<div class="ibox-content">
 						@if(sizeof($record->tracks))
-							@foreach($record->tracks as $index => $track)
-								@include('admin.records.tracks.editor', ['track' => $track, 'index' => $index])
-							@endforeach
+							<form method="post" action="{{ route('ajax.admin.track.save.many', ['record_id' => $record->id]) }}" autocomplete="off" enctype="multipart/form-data">
+								@foreach($record->tracks as $index => $track)
+									@include('admin.records.tracks.editor2', ['track' => $track, 'index' => $index])
+								@endforeach
+
+								<div id="new-track"></div>
+
+								<a id="add_track" href="{{ route('ajax.admin.track.add', ['record_id' => $record->id]) }}" class="btn btn-warning">Add new track</a>
+
+								{{ csrf_field() }}
+
+								<div class="form-group clearfix m-b-sm">
+									<div class="col-sm-4 col-sm-offset-8 clearfix">
+										<button class="btn btn-primary pull-right" type="submit">Save changes</button>
+									</div>
+								</div>
+							</form>
 						@endif
 
-						<div id="new-track"></div>
-
-						<a id="add_track" href="{{ route('ajax.admin.track.add', ['record_id' => $record->id]) }}" class="btn btn-warning">Add new track</a>
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
+	<img src="" id="img"/>
+
+	<form id="theform" method="post" action="{{ route('save.image') }}">
+		<input type="hidden" id="theinput" name="src" value=""/>
+		{{ csrf_field() }}
+	</form>
 @endsection
 
 @section('scripts')
 	<script src="{{ asset( 'libs/inspinia/js/plugins/iCheck/icheck.min.js' ) }}"></script>
 	<script src="{{ asset( 'libs/dropzone/dropzone.js' ) }}"></script>
+
+
+
+	<script src="{{ URL::to('js/wavesurfer.js') }}"></script>
+	{{--<script src="{{ URL::to('js/audioPlayer.js') }}"></script>--}}
+
+	<script>
+		$(function() {
+
+//			var wavesurfer = WaveSurfer.create({
+//				container: '#waveform',
+//				height: 40,
+//				waveColor: color,
+//				progressColor: color1,
+//				cursorColor: '#555',
+//			});
+
+
+			$('.save').on('click', function(event){
+				event.preventDefault();
+				var $element = $('#wave' + $(this).data('id'));
+				initWavesurfer2($element);
+				setTimeout(function(){
+					putImage($element);
+				}, 1500);
+
+				setTimeout(function(){
+					$('#theinput').val($('#img').attr('src'));
+					$('#theform').submit();
+				}, 2200);
+			})
+		});
+
+
+		function initWavesurfer2($element) {
+			var url = $element.data('url');
+
+			wavesurfer = WaveSurfer.create({
+				container: '#' + $element.attr('id'),
+				height: 40,
+				waveColor: '#bbb',
+				progressColor: '#777',
+				cursorColor: '#555',
+			});
+
+			wavesurfer.load(url);
+//			$activeTrack = $element;
+
+		}
+		function putImage($element)
+		{
+			var canvas1 = $element.find('canvas');
+			if (canvas1[0].getContext) {
+				var ctx = canvas1[0].getContext("2d");
+				var myImage = canvas1[0].toDataURL("image/png").replace("image/png", "image/octet-stream");
+			}
+			var imageElement = document.getElementById("img");
+			imageElement.src = myImage;
+
+		}
+	</script>
+
 	<script>
 		//		$(document).ready(function() {
 		//			$('.i-checks').iCheck({

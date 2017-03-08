@@ -146,7 +146,7 @@ $(function() {
 	/*
 	 *  WaveSurfer Functions
 	 */
-	initWavesurfer($($leftPlaylistItems).first());
+	// initWavesurfer($($leftPlaylistItems).first());
 
 	wavesurfer.on('ready', function() {
 		$btnPlay.on('click', function() {

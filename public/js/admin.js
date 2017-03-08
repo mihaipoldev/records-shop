@@ -1,6 +1,28 @@
-$(function(){
+$(function() {
+	// $('body').on('click', '#add_track', function(event) {
+	// 	event.preventDefault();
+	//
+	// 	var $group = jQuery('.renter-field-group'),
+	// 		$new = null,
+	// 		$list = jQuery('.renter-list');
+	//
+	// 	if($group.length <= 0) {
+	// 		return false;
+	// 	}
+	//
+	// 	if($group.length > 1) {
+	// 		$group = $group.first();
+	// 	}
+	//
+	// 	$new = $group.clone();
+	//
+	// 	$new.find('input').val('');
+	//
+	// 	$list.append($new);
+	// });
+
 	/* ajax save track */
-	$('#add_track').on('click', function(event){
+	$('#add_track').on('click', function(event) {
 		event.preventDefault();
 
 		var url = $(this).attr('href');
@@ -8,12 +30,9 @@ $(function(){
 		$.ajax({
 			type: "GET",
 			url: url,
-			cache: false,
-			contentType: false,
-			processData: false,
 			success: function(result) {
 				console.log(result);
-				$('#new-track').html(result);
+				$('#new-track').append(result);
 			}
 		});
 	})
