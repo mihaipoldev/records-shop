@@ -4,12 +4,32 @@ namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
+use App\Models\Artist;
+use App\Models\Record;
 use App\Models\Track;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use View;
 
 class TrackController extends Controller
 {
+	/**
+	 * Ajax - Display the list of artists for specific track
+	 *
+	 * @return View
+	 */
+	public function ajaxArtistList($track_id) {
+		$track = Track::find($track_id);
+		$artists = Artist::orderBy('name')->get();
+
+		return view('admin.records.artists.list-track', [
+			'track' => $track,
+			'artists' => $artists,
+		]);
+	}
+
+
+
 	/**
 	 * Ajax add a draft track or use an existing one
 	 */
@@ -44,7 +64,7 @@ class TrackController extends Controller
 	 *
 	 * @param Request $request
 	 * @param $track_id
-	 * @return RedirectResponse
+	 * @return View
 	 */
 	public function ajaxEditor(Request $request, $track_id) {
 		$track = Track::find($track_id);
@@ -81,8 +101,12 @@ class TrackController extends Controller
 
 		if(!$track->slug){
 			Helper::slugify($track->name);
-			$track->draft = false;
 		}
+
+		$record = Record::find($record_id);
+
+		$track->draft = false;
+		$track->update();
 
 		return redirect()->route('admin.records.edit', [
 			'record_id' => $track->record->id,

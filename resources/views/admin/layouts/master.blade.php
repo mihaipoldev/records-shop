@@ -84,6 +84,7 @@
 		<script src="{{ asset( 'libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js' ) }}"></script>
 		<script src="{{ asset( 'libs/inspinia/js/inspinia.js' ) }}"></script>
 		<script src="{{ asset( 'libs/inspinia/js/plugins/pace/pace.min.js' ) }}"></script>
+		<script src="{{ asset( 'libs/is-loading.js' ) }}"></script>
 		<script src="{{ asset( 'js/admin.js' ) }}"></script>
 
 		@yield('scripts')

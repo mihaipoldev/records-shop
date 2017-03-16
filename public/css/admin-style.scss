@@ -1,4 +1,10 @@
 
+.select2-dropdown {
+	z-index: 9001 !important;
+}
+.modal-dialog {
+	z-index: 1050;
+}
 .i-checks {
 	.icheckbox_square-green {
 		position: relative;
@@ -21,6 +27,55 @@
 		}
 	}
 }
+.artist-selection {
+	display: inline-block;
+	float: left;
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 2px 5px;
+	margin-right: 5px;
 
+	span {
+		margin-right: 7px;
+	}
 
+	i {
+		font-size: 12px;
+		line-height: 18px;
+		cursor: pointer;
+		color: #999;
 
+		&:hover{
+			color: #333;
+		}
+	}
+
+	&:hover{
+		border-color: #bbb;
+	}
+}
+#artists-modal{
+	table{
+		tr{
+			.fa-check-square-o{
+				line-height: 18px;
+				height: 18px;
+				display: none;
+			}
+			.fa-square-o{
+				line-height: 18px;
+				height: 18px;
+				display: block;
+			}
+
+			&.active{
+				.fa-check-square-o{
+					display: block;
+				}
+				.fa-square-o{
+					display: none;
+				}
+			}
+		}
+	}
+}

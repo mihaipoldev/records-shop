@@ -4,6 +4,7 @@
 
 @section('inspinia_style')
 	<link href="{{ asset( 'libs/inspinia/css/plugins/iCheck/custom.css') }}" rel="stylesheet"/>
+	<link href="{{ asset( 'libs/select2/select2.css') }}" rel="stylesheet"/>
 @endsection
 
 @section('head_js')
@@ -47,7 +48,7 @@
 					</div>
 
 					<div class="ibox-content">
-						<form method="post" action="">
+						<form method="post" action="{{ route('ajax.admin.record.save', ['record_id' => $record->id]) }}">
 							<div class="row">
 								<div class="col-md-6">
 									<div class="form-group">
@@ -127,6 +128,33 @@
 										<img class="form-image" src="{{ asset('/uploads/no-image.png') }}" style="width: 100px;"/>
 									@endif
 								</div>
+
+								<div class="col-md-12">
+									<div id="artists-form-group" class="form-group clearfix">
+										<label class="control-label">Artists:</label>
+
+										<div id="artists-display">
+											@foreach($record->artists as $artist)
+												<div class="artist-selection" data-artist-id="{{ $artist->id }}">
+													<span>{{ $artist->name }}</span>
+													<i class="fa fa-cog artist-edit" data-url="{{ route('ajax.record.artist.editor', ['artist_id' => $artist->id]) }}" data-toggle="modal" data-target="#artists-modal"></i>
+													<i class="fa fa-remove artist-remove" data-delete-url="{{ route('ajax.record.artist.delete', ['artist_id' => $artist->id]) }}"></i>
+													<input class="artist-input" type="hidden" name="artists[]" value="{{ $artist->id }}"/>
+												</div>
+											@endforeach
+										</div>
+
+										<a id="manage-artists-btn" class="pull-right clearfix" data-url="{{ route('ajax.record.artists') }}" data-toggle="modal" data-target="#artists-modal">
+											Manage Artists
+										</a>
+									</div>
+								</div>
+
+								{{ csrf_field() }}
+
+								<div class="col-md-12">
+									<button class="btn btn-primary pull-right" type="submit">Save changes</button>
+								</div>
 							</div>
 						</form>
 					</div>
@@ -181,19 +209,73 @@
 		<input type="hidden" id="theinput" name="src" value=""/>
 		{{ csrf_field() }}
 	</form>
+
+	@include('admin.records.artists.modal')
 @endsection
 
 @section('scripts')
+
 	<script src="{{ asset( 'libs/inspinia/js/plugins/iCheck/icheck.min.js' ) }}"></script>
 	<script src="{{ asset( 'libs/dropzone/dropzone.js' ) }}"></script>
+	<script src="{{ asset( 'libs/select2/select2.js' ) }}"></script>
 
 
 
 	<script src="{{ URL::to('js/wavesurfer.js') }}"></script>
 	{{--<script src="{{ URL::to('js/audioPlayer.js') }}"></script>--}}
+	<script type="text/javascript">
+		if ($.ui && $.ui.dialog && $.ui.dialog.prototype._allowInteraction) {
+			var ui_dialog_interaction = $.ui.dialog.prototype._allowInteraction;
+			$.ui.dialog.prototype._allowInteraction = function(e) {
+				if ($(e.target).closest('.select2-dropdown').length) return true;
+				return ui_dialog_interaction.apply(this, arguments);
+			};
+		}
 
+		$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+		$('#select-artists').select2();
+		$('#select-artists-for-band').select2();
+
+	</script>
 	<script>
 		$(function() {
+
+
+
+//			$('body').on('submit', 'form.new-artist-from', function(event){
+//				event.preventDefault();
+//
+//				var url = $(this).attr('action');
+//
+//				$.ajax({
+//					type: "POST",
+//					url: url,
+//					success: function(result) {
+//						$('#new-artist').modal('toggle');
+//					}
+//				});
+//			})
+
+
+
+			$('.i-checks').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+			})
+					.on('ifToggled', function(event) {
+						jQuery(this).trigger('change');
+					});
+
+
+			$('body').on('change', 'input#is-band', function(event) {
+				if($(this).parent().hasClass('checked')){
+					$('#artist-is-band').addClass('hidden');
+				}
+				else{
+					console.log('ssss');
+					$('#artist-is-band').removeClass('hidden');
+				}
+			});
 
 //			var wavesurfer = WaveSurfer.create({
 //				container: '#waveform',
@@ -204,15 +286,15 @@
 //			});
 
 
-			$('.save').on('click', function(event){
+			$('.save').on('click', function(event) {
 				event.preventDefault();
 				var $element = $('#wave' + $(this).data('id'));
 				initWavesurfer2($element);
-				setTimeout(function(){
+				setTimeout(function() {
 					putImage($element);
 				}, 1500);
 
-				setTimeout(function(){
+				setTimeout(function() {
 					$('#theinput').val($('#img').attr('src'));
 					$('#theform').submit();
 				}, 2200);
@@ -235,10 +317,9 @@
 //			$activeTrack = $element;
 
 		}
-		function putImage($element)
-		{
+		function putImage($element) {
 			var canvas1 = $element.find('canvas');
-			if (canvas1[0].getContext) {
+			if(canvas1[0].getContext) {
 				var ctx = canvas1[0].getContext("2d");
 				var myImage = canvas1[0].toDataURL("image/png").replace("image/png", "image/octet-stream");
 			}

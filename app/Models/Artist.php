@@ -11,7 +11,7 @@ class Artist extends Model
 
 	protected $fillable = [
 		'name',
-		'band',
+		'is_band',
 		'slug',
 	];
 
@@ -36,6 +36,16 @@ class Artist extends Model
 	}
 
 	public function __toString() {
+		if($this->band){
+			$name = $this->name . ' (';
+			foreach($this->artists as $index => $artist){
+				if($index != 0){
+					$name .= ', ';
+				}
+				$name .= $artist->name;
+			}
+			return $name . ')';
+		}
 		return $this->name;
 	}
 }

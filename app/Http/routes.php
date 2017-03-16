@@ -55,6 +55,13 @@ Route::group(['prefix' => '/admin'], function() {
 	->where('id', '[0-9]+');
 
 
+	Route::post('/record/{record_id}/save', [
+		'uses' => 'Admin\RecordController@ajaxSave',
+		'as'   => 'ajax.admin.record.save',
+	])
+	->where('record_id', '[0-9]+');
+
+
 	/** track */
 	Route::get('/track/add/to-{record_id}', [
 		'uses' => 'Admin\TrackController@add',
@@ -72,6 +79,33 @@ Route::group(['prefix' => '/admin'], function() {
 		'as'   => 'ajax.admin.track.save',
 	])
 	->where('track_id', '[0-9]+');
+
+	Route::get( '/track-artists/{track_id}', [
+		'uses' => 'Admin\TrackController@ajaxArtistList',
+		'as'   => 'ajax.record.track.artists',
+	]);
+
+	/** START ___ Artists */
+	Route::get( '/artists', [
+		'uses' => 'Admin\ArtistController@ajaxItems',
+		'as'   => 'ajax.record.artists',
+	]);
+
+	Route::get( '/artist/{artist_id?}', [
+		'uses' => 'Admin\ArtistController@ajaxEditor',
+		'as'   => 'ajax.record.artist.editor',
+	]);
+
+	Route::post('/artist-save/{artist_id?}', [
+		'uses' => 'Admin\ArtistController@ajaxSave',
+		'as'   => 'ajax.record.artist.save',
+	]);
+
+	Route::get('/artist-delete/{artist_id}', [
+		'uses' => 'Admin\ArtistController@ajaxDelete',
+		'as'   => 'ajax.record.artist.delete',
+	]);
+	/** END */
 
 
 	Route::post('/record/{record_id}/save-tracks', [

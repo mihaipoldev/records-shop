@@ -62,8 +62,25 @@
 				</div>
 			</div>
 
-			<div class="col-md-6">
-				SELECT ARTISTS
+			<div class="col-md-12">
+				<div id="artists-form-group" class="form-group clearfix">
+					<label class="control-label">Artists:</label>
+
+					<div class="track-artists-display" data-track-id="{{ $track->id }}">
+						@foreach($track->artists as $artist)
+							<div class="artist-selection" data-artist-id="{{ $artist->id }}">
+								<span>{{ $artist->name }}</span>
+								<i class="fa fa-cog artist-edit" data-url="{{ route('ajax.record.artist.editor', ['artist_id' => $artist->id]) }}" data-toggle="modal" data-target="#artists-modal"></i>
+								<i class="fa fa-remove artist-remove" data-delete-url="{{ route('ajax.record.artist.delete', ['artist_id' => $artist->id]) }}"></i>
+								<input class="track-artist-input" type="hidden" name="tracks[{{ $track->id }}][artists][]" value="{{ $artist->id }}"/>
+							</div>
+						@endforeach
+					</div>
+
+					<a id="manage-artists-btn" class="pull-right clearfix" data-url="{{ route('ajax.record.track.artists', ['track_id' => $track->id]) }}" data-toggle="modal" data-target="#artists-modal">
+						Manage Artists
+					</a>
+				</div>
 			</div>
 			{{--poate fac ceva in gen (dadsada X), (sdasda (remix) X) + --}}
 		</div>
