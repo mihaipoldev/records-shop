@@ -30,6 +30,8 @@ class Helper
 		return $text;
 	}
 
+
+
 	/**
 	 * Upload File and get the path
 	 *
@@ -60,4 +62,5 @@ class Helper
 
 		return $nameExploded[0] . ($index ? $index : '') . '.' . $nameExploded[1];
 	}
+
 }

@@ -1,10 +1,9 @@
 <!DOCTYPE html>
 <html>
-
 	<head>
-
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta name="_token" content="{{ csrf_token() }}" />
 
 		<title>Admin | @yield('title')</title>
 
@@ -85,6 +84,7 @@
 		<script src="{{ asset( 'libs/inspinia/js/inspinia.js' ) }}"></script>
 		<script src="{{ asset( 'libs/inspinia/js/plugins/pace/pace.min.js' ) }}"></script>
 		<script src="{{ asset( 'libs/is-loading.js' ) }}"></script>
+		<script src="{{ asset( 'js/init.js' ) }}"></script>
 		<script src="{{ asset( 'js/admin.js' ) }}"></script>
 
 		@yield('scripts')

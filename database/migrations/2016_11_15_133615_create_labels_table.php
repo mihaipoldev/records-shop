@@ -16,6 +16,7 @@ class CreateLabelsTable extends Migration
             $table->increments('id');
 	        $table->string('name');
 	        $table->string('slug')->nullable();
+	        $table->string('draft')->nullable()->default(false);
 	        $table->timestamps();
 	        $table->softDeletes();
         });

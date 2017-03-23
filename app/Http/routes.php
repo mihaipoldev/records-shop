@@ -52,14 +52,19 @@ Route::group(['prefix' => '/admin'], function() {
 		'uses' => 'Admin\RecordController@editor',
 		'as'   => 'admin.records.edit',
 	])
-	->where('id', '[0-9]+');
+		->where('id', '[0-9]+');
 
 
 	Route::post('/record/{record_id}/save', [
 		'uses' => 'Admin\RecordController@ajaxSave',
 		'as'   => 'ajax.admin.record.save',
 	])
-	->where('record_id', '[0-9]+');
+		->where('record_id', '[0-9]+');
+
+	Route::post('/record/{record_id}/save-image', [
+		'uses' => 'Admin\RecordController@ajaxSaveImage',
+		'as'   => 'ajax.admin.record.save.image',
+	]);
 
 
 	/** track */
@@ -72,26 +77,26 @@ Route::group(['prefix' => '/admin'], function() {
 		'uses' => 'Admin\TrackController@ajaxEditor',
 		'as'   => 'ajax.admin.track.save',
 	])
-	->where('track_id', '[0-9]+');
+		->where('track_id', '[0-9]+');
 
 	Route::post('/track/{track_id}/save', [
 		'uses' => 'Admin\TrackController@ajaxSave',
 		'as'   => 'ajax.admin.track.save',
 	])
-	->where('track_id', '[0-9]+');
+		->where('track_id', '[0-9]+');
 
-	Route::get( '/track-artists/{track_id}', [
+	Route::get('/track-artists/{track_id}', [
 		'uses' => 'Admin\TrackController@ajaxArtistList',
 		'as'   => 'ajax.record.track.artists',
 	]);
 
 	/** START ___ Artists */
-	Route::get( '/artists', [
+	Route::get('/artists', [
 		'uses' => 'Admin\ArtistController@ajaxItems',
 		'as'   => 'ajax.record.artists',
 	]);
 
-	Route::get( '/artist/{artist_id?}', [
+	Route::get('/artist/{artist_id?}', [
 		'uses' => 'Admin\ArtistController@ajaxEditor',
 		'as'   => 'ajax.record.artist.editor',
 	]);
@@ -107,15 +112,31 @@ Route::group(['prefix' => '/admin'], function() {
 	]);
 	/** END */
 
+	/** Start ___ Labels */
+	Route::get('/record/labels/{record_id?}', [
+		'uses' => 'Admin\LabelController@items',
+		'as'   => 'ajax.record.labels',
+	]);
+
+	Route::get('/label/{label_id?}', [
+		'uses' => 'Admin\LabelController@editor',
+		'as'   => 'ajax.record.label.editor',
+	]);
+
+	Route::post('/label-save/{label_id}', [
+		'uses' => 'Admin\LabelController@save',
+		'as'   => 'ajax.record.label.save',
+	]);
+	/** End */
 
 	Route::post('/record/{record_id}/save-tracks', [
 		'uses' => 'Admin\RecordController@ajaxSaveTracks',
 		'as'   => 'ajax.admin.track.save.many',
 	])
-	->where('record_id', '[0-9]+');
+		->where('record_id', '[0-9]+');
 });
 
-Route::post('/save-image', function(Illuminate\Http\Request $request){
+Route::post('/save-image', function(Illuminate\Http\Request $request) {
 	dd($request['src']);
 })->name('save.image');
 // });

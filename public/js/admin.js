@@ -1,5 +1,43 @@
 $(function() {
-	var $body = $('body');
+	var $body = $('body'),
+		$modal = $('#modal'),
+		$modalWrapper = $('#modal-wrapper');
+
+	/* START > GENERAL */
+	$body.on('click', '.ajax-modal-btn', function(event) {
+		if(!$(this).data('data-toggle') == 'modal') {
+			event.preventDefault();
+		}
+
+		var url = $(this).data('url');
+
+		loadingElement($modalWrapper);
+		setTimeout(function() {
+			$.ajax({
+				type: "GET",
+				url: url,
+				success: function(result) {
+					$modalWrapper.html(result);
+				}
+			});
+		}, 100);
+	});
+
+	$body.on('click', '.label-select-btn', function(event) {
+		event.preventDefault();
+
+		var $parent = $(this).parent().parent();
+
+		if(!$parent.hasClass('active')) {
+			$('#label-input').val($(this).data('item-id'));
+			$('#label-text').html($(this).data('item-name'));
+
+			$('#modal table tr.active').removeClass('active');
+
+			$parent.addClass('active');
+		}
+	});
+	/* END */
 
 	/* START ___ Artists */
 	var $artistModal = $('#artists-modal'),
@@ -121,6 +159,68 @@ $(function() {
 		});
 	});
 	/* END */
+
+
+
+	/* START > Photos */
+	$body.on('change', '#record-image-input', function(event) {
+		event.preventDefault();
+
+		var url = $(this).data('url'),
+			myFormData = new FormData();
+		myFormData.append('image', $(this)[0].files[0]);
+
+		$.ajax({
+			url: url,
+			type: 'POST',
+			processData: false, // important
+			contentType: false, // important
+			data: myFormData,
+			success: function(result) {
+				$('#record-image').attr('src', result);
+				$('#ceva').html(result);
+			}
+		});
+	});
+
+	// $body.on('click', '.remove-image', function(event) {
+	// 	event.preventDefault();
+	//
+	// 	var url = $(this).data('url'),
+	// 		$this = $(this);
+	//
+	// 	$.ajax({
+	// 		url: url,
+	// 		type: 'GET',
+	// 		success: function() {
+	// 			$this.parent().parent().remove();
+	//
+	// 		}
+	// 	});
+	// });
+	//
+	// $("#photos-list").sortable({
+	// 	vertical: false,
+	// 	items: ".sortable-item",
+	// 	update: function(event, ui) {
+	// 		var $sortable = $("#photos-list"),
+	// 			data = $sortable.sortable("toArray"),
+	// 			url = $sortable.data('url');
+	// 		console.log(data);
+	//
+	// 		$.ajax({
+	// 			type: 'POST',
+	// 			url: url,
+	// 			data: {
+	// 				items: data
+	// 			},
+	// 			success: function(result){
+	//
+	// 			}
+	// 		});
+	// 	}
+	// }).disableSelection();
+	/* END > Photos */
 });
 
 
@@ -157,6 +257,17 @@ var artistSelectionTrackHtml = function($selectBtn) {
 		deleteUl = $selectBtn.data('delete-url');
 
 	return '<div class="artist-selection" data-artist-id="' + artistId + '"><span>' + artistName + '</span> <i class="fa fa-cog artist-edit" data-url="' + editUrl + '" data-toggle="modal" data-target="#artists-modal"></i> <i class="fa fa-remove artist-remove" data-url="' + deleteUl + '"></i> <input class="track-artist-input" type="hidden" name="tracks[' + $selectBtn.parent().parent().data('track-id') + '][artists][]" value="' + artistId + '"/></div>';
+};
+
+var setItemTableList = function() {
+	$('#modal table.list').find('tr').each(function() {
+		var $tr = $(this);
+		$('.artist-input').each(function() {
+			if($tr.data('artist-id') == $(this).val()) {
+				$tr.addClass('active');
+			}
+		});
+	});
 };
 
 var setArtistTableActiveRow = function() {

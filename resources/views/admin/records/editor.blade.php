@@ -49,51 +49,94 @@
 
 					<div class="ibox-content">
 						<form method="post" action="{{ route('ajax.admin.record.save', ['record_id' => $record->id]) }}">
-							<div class="row">
+							<div class="row row-10">
 								<div class="col-md-6">
 									<div class="form-group">
 										<label class="control-label">Name:</label>
 										<input class="form-control" type="text" name="name" placeholder="Name" required
 										       value="{{ old('name') ? old('name') : $record->name ? $record->name : '' }}">
 									</div>
-								</div>
 
-								<div class="col-md-6">
+									<div class="form-group">
+										<label class="control-label">Label:</label>
+
+										<div>
+											@if($record->label)
+												<span id="label-text" style="display: inline-block; height: 20px; line-height: 20px;">
+													{{ $record->label }}
+												</span>
+
+												<input id="label-input" type="hidden" name="label_id" value="{{ $record->label->id }}"/>
+											@else
+												No Label Selected
+											@endif
+
+											<a class="pull-right ajax-modal-btn" data-url="{{ route('ajax.record.labels', ['record_id' => $record]) }}" data-toggle="modal" data-target="#modal">
+												<i class="fa fa-cog" style="font-size: 20px; color: #555"></i>
+											</a>
+										</div>
+
+									</div>
+
 									<div class="form-group">
 										<label class="control-label">Release Date:</label>
 										<input class="form-control" type="date" name="release_date" required
 										       value="{{ old('release_date') ? old('release_date') : $record->release_date ? $record->release_date : '' }}">
 									</div>
+
+									<div class="row row-5">
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">Catalog:</label>
+												<input class="form-control" type="text" name="catalog" placeholder="Catalog" required
+												       value="{{ old('catalog') ? old('catalog') : $record->catalog ? $record->catalog : '' }}">
+											</div>
+										</div>
+
+										<div class="col-md-6">
+											<div class="form-group">
+												<label class="control-label">Format:</label>
+												<input class="form-control" type="text" name="format" placeholder="Format" required
+												       value="{{ old('format') ? old('format') : $record->format ? $record->format : '' }}">
+											</div>
+										</div>
+									</div>
 								</div>
 
+								{{-- ATANTION!!!!!! cand e new record nu se poate adauga imagine --}}
 								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label">Label:</label>
-										<select class="form-control" name="label" required>
-											<option selected value disabled>--- select a label ---</option>
-											@foreach(\App\Models\Label::orderBy('name')->get() as $label)
-												<option value="{{ $label->id }}" {{ (old('label') and old('label') == $label->id) ? 'selected' : $record->label ? $record->label->id == $label->id ? 'selected' : '' : '' }}>
-													{{ $label }}
-												</option>
+									<figure class="record-artwork">
+										<img id="record-image" class="form-image" src="{{ asset($record->image ? $record->image : '/uploads/no-image.png') }}" style="width: 100%;"/>
+
+										<div id="ceva">
+
+										</div>
+										<input id="record-image-input" class="hidden" type="file" data-url="{{ route('ajax.admin.record.save.image', ['record_id' => $record->id]) }}"/>
+										<label for="record-image-input" class="change-btn">Change</label>
+
+										<div class="background"></div>
+									</figure>
+								</div>
+
+								<div class="col-md-12">
+									<div id="artists-form-group" class="form-group clearfix">
+										<label class="control-label">Artists:</label>
+
+										<div id="artists-display">
+											@foreach($record->artists as $artist)
+												<div class="artist-selection" data-artist-id="{{ $artist->id }}">
+													<span>{{ $artist->name }}</span>
+													<i class="fa fa-cog artist-edit" data-url="{{ route('ajax.record.artist.editor', ['artist_id' => $artist->id]) }}" data-toggle="modal"
+													   data-target="#artists-modal"></i>
+													<i class="fa fa-remove artist-remove" data-delete-url="{{ route('ajax.record.artist.delete', ['artist_id' => $artist->id]) }}"></i>
+													<input class="artist-input" type="hidden" name="artists[]" value="{{ $artist->id }}"/>
+												</div>
 											@endforeach
-										</select>
-										<a href="#addNewLabel">new label</a>
-									</div>
-								</div>
+										</div>
 
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label">Catalog:</label>
-										<input class="form-control" type="text" name="catalog" placeholder="Catalog" required
-										       value="{{ old('catalog') ? old('catalog') : $record->catalog ? $record->catalog : '' }}">
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label">Format:</label>
-										<input class="form-control" type="text" name="format" placeholder="Format" required
-										       value="{{ old('format') ? old('format') : $record->format ? $record->format : '' }}">
+										<a id="manage-artists-btn" class="pull-right clearfix" data-url="{{ route('ajax.record.artists') }}" data-toggle="modal" data-target="#artists-modal">
+											<i class="fa fa-cog" style="font-size: 20px; color: #555"></i>
+										</a>
 									</div>
 								</div>
 
@@ -113,7 +156,7 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
+								<div class="col-md-12">
 									<div class="form-group">
 										<label class="control-label">Description:</label>
 										<textarea class="form-control" name="description" rows="5" placeholder="Description"
@@ -121,34 +164,6 @@
 									</div>
 								</div>
 
-								<div class="col-md-6">
-									@if($record->image)
-										<img class="form-image" src="{{ asset($record->image) }}" style="width: 100px;"/>
-									@else
-										<img class="form-image" src="{{ asset('/uploads/no-image.png') }}" style="width: 100px;"/>
-									@endif
-								</div>
-
-								<div class="col-md-12">
-									<div id="artists-form-group" class="form-group clearfix">
-										<label class="control-label">Artists:</label>
-
-										<div id="artists-display">
-											@foreach($record->artists as $artist)
-												<div class="artist-selection" data-artist-id="{{ $artist->id }}">
-													<span>{{ $artist->name }}</span>
-													<i class="fa fa-cog artist-edit" data-url="{{ route('ajax.record.artist.editor', ['artist_id' => $artist->id]) }}" data-toggle="modal" data-target="#artists-modal"></i>
-													<i class="fa fa-remove artist-remove" data-delete-url="{{ route('ajax.record.artist.delete', ['artist_id' => $artist->id]) }}"></i>
-													<input class="artist-input" type="hidden" name="artists[]" value="{{ $artist->id }}"/>
-												</div>
-											@endforeach
-										</div>
-
-										<a id="manage-artists-btn" class="pull-right clearfix" data-url="{{ route('ajax.record.artists') }}" data-toggle="modal" data-target="#artists-modal">
-											Manage Artists
-										</a>
-									</div>
-								</div>
 
 								{{ csrf_field() }}
 
@@ -211,6 +226,7 @@
 	</form>
 
 	@include('admin.records.artists.modal')
+	@include('admin.modals.modal')
 @endsection
 
 @section('scripts')
@@ -224,15 +240,16 @@
 	<script src="{{ URL::to('js/wavesurfer.js') }}"></script>
 	{{--<script src="{{ URL::to('js/audioPlayer.js') }}"></script>--}}
 	<script type="text/javascript">
-		if ($.ui && $.ui.dialog && $.ui.dialog.prototype._allowInteraction) {
+		if($.ui && $.ui.dialog && $.ui.dialog.prototype._allowInteraction) {
 			var ui_dialog_interaction = $.ui.dialog.prototype._allowInteraction;
 			$.ui.dialog.prototype._allowInteraction = function(e) {
-				if ($(e.target).closest('.select2-dropdown').length) return true;
+				if($(e.target).closest('.select2-dropdown').length) return true;
 				return ui_dialog_interaction.apply(this, arguments);
 			};
 		}
 
-		$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+		$.fn.modal.Constructor.prototype.enforceFocus = function() {
+		};
 		$('#select-artists').select2();
 		$('#select-artists-for-band').select2();
 
@@ -257,7 +274,6 @@
 //			})
 
 
-
 			$('.i-checks').iCheck({
 				checkboxClass: 'icheckbox_square-green',
 				radioClass: 'iradio_square-green',
@@ -268,10 +284,10 @@
 
 
 			$('body').on('change', 'input#is-band', function(event) {
-				if($(this).parent().hasClass('checked')){
+				if($(this).parent().hasClass('checked')) {
 					$('#artist-is-band').addClass('hidden');
 				}
-				else{
+				else {
 					console.log('ssss');
 					$('#artist-is-band').removeClass('hidden');
 				}
