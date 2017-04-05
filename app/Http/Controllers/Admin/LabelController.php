@@ -12,7 +12,7 @@ use View;
 class LabelController extends Controller
 {
 	/**
-	 * Ajax - Items
+	 * Items
 	 *
 	 * @return View
 	 */
@@ -31,7 +31,7 @@ class LabelController extends Controller
 
 
 	/**
-	 * Ajax - Editor
+	 * Editor
 	 *
 	 * @param int|null $label_id
 	 * @return View
@@ -55,7 +55,7 @@ class LabelController extends Controller
 
 
 	/**
-	 * Ajax - Save artist
+	 * Save
 	 *
 	 * @param Request $request
 	 * @param int $artist_id
@@ -89,7 +89,7 @@ class LabelController extends Controller
 
 
 	/**
-	 * Ajax - Delete an artist
+	 * Delete
 	 *
 	 * @param int $artist_id
 	 * @return string

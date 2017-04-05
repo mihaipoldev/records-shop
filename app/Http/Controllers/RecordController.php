@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
+use App\Models\Cart;
 use App\Models\Record;
 use ColorThief\ColorThief;
+use Illuminate\Http\Request;
+use Session;
 
 class RecordController extends Controller
 {
@@ -37,12 +40,70 @@ class RecordController extends Controller
 		]);
 	}
 
+	/**
+	 * Add to cart
+	 *
+	 * @param Request $request
+	 * @param $record_id
+	 * @return \Redirect
+	 */
+	public function addToCart(Request $request, $record_id) {
+		$record = Record::find($record_id);
+
+		$oldCart = Session::has('cart') ? Session::get('cart') : null;
+
+		$cart = new Cart($oldCart);
+		$cart->add($record, $record_id);
+
+		Session::put('cart', $cart);
+		Session::save();
+
+		return redirect()->route('record.list');
+	}
+
+	/**
+	 * Shopping Cart View
+	 *
+	 * @return \View
+	 */
+	public function shoppingCart() {
+		if(!Session::has('cart')) {
+			return view('shop.shopping-cart', ['cart' => null]);
+		}
+
+		$oldCart = Session::get('cart');
+		$cart = new Cart($oldCart);
+
+		return view('shop.shopping-cart', [
+			'cart' => $cart,
+		]);
+	}
+
+	/**
+	 * Checkout
+	 *
+	 * @return \View
+	 */
+	public function checkout(){
+		if(!Session::has('cart')) {
+			return view('shop.shopping-cart', ['cart' => null]);
+		}
+
+		$oldCart = Session::get('cart');
+		$cart = new Cart($oldCart);
+
+		return view('shop.checkout', [
+			'cart' => $cart
+		]);
+	}
+
+
 	private function _getPrevAndNextRecord($id) {
 		foreach($this->records as $index => $record) {
 			if($record->id == $id) {
 				return [
 					'prev' => $index ? $this->records[$index - 1] : null,
-					'next' => $index != (sizeof($this->records)-1) ? $this->records[$index + 1] : null,
+					'next' => $index != (sizeof($this->records) - 1) ? $this->records[$index + 1] : null,
 				];
 			}
 		}

@@ -1,13 +1,10 @@
 @extends('admin.layouts.master')
 
-@section('title') Index @endsection
+@section('title') Record Editor @endsection
 
 @section('inspinia_style')
 	<link href="{{ asset( 'libs/inspinia/css/plugins/iCheck/custom.css') }}" rel="stylesheet"/>
 	<link href="{{ asset( 'libs/select2/select2.css') }}" rel="stylesheet"/>
-@endsection
-
-@section('head_js')
 @endsection
 
 @section('content')
@@ -28,7 +25,6 @@
 		</div>
 	</div>
 
-
 	<main class="wrapper wrapper-content">
 		<div class="row">
 			<div class="col-lg-6">
@@ -48,130 +44,7 @@
 					</div>
 
 					<div class="ibox-content">
-						<form method="post" action="{{ route('ajax.admin.record.save', ['record_id' => $record->id]) }}">
-							<div class="row row-10">
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label">Name:</label>
-										<input class="form-control" type="text" name="name" placeholder="Name" required
-										       value="{{ old('name') ? old('name') : $record->name ? $record->name : '' }}">
-									</div>
-
-									<div class="form-group">
-										<label class="control-label">Label:</label>
-
-										<div>
-											@if($record->label)
-												<span id="label-text" style="display: inline-block; height: 20px; line-height: 20px;">
-													{{ $record->label }}
-												</span>
-
-												<input id="label-input" type="hidden" name="label_id" value="{{ $record->label->id }}"/>
-											@else
-												No Label Selected
-											@endif
-
-											<a class="pull-right ajax-modal-btn" data-url="{{ route('ajax.record.labels', ['record_id' => $record]) }}" data-toggle="modal" data-target="#modal">
-												<i class="fa fa-cog" style="font-size: 20px; color: #555"></i>
-											</a>
-										</div>
-
-									</div>
-
-									<div class="form-group">
-										<label class="control-label">Release Date:</label>
-										<input class="form-control" type="date" name="release_date" required
-										       value="{{ old('release_date') ? old('release_date') : $record->release_date ? $record->release_date : '' }}">
-									</div>
-
-									<div class="row row-5">
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label">Catalog:</label>
-												<input class="form-control" type="text" name="catalog" placeholder="Catalog" required
-												       value="{{ old('catalog') ? old('catalog') : $record->catalog ? $record->catalog : '' }}">
-											</div>
-										</div>
-
-										<div class="col-md-6">
-											<div class="form-group">
-												<label class="control-label">Format:</label>
-												<input class="form-control" type="text" name="format" placeholder="Format" required
-												       value="{{ old('format') ? old('format') : $record->format ? $record->format : '' }}">
-											</div>
-										</div>
-									</div>
-								</div>
-
-								{{-- ATANTION!!!!!! cand e new record nu se poate adauga imagine --}}
-								<div class="col-md-6">
-									<figure class="record-artwork">
-										<img id="record-image" class="form-image" src="{{ asset($record->image ? $record->image : '/uploads/no-image.png') }}" style="width: 100%;"/>
-
-										<div id="ceva">
-
-										</div>
-										<input id="record-image-input" class="hidden" type="file" data-url="{{ route('ajax.admin.record.save.image', ['record_id' => $record->id]) }}"/>
-										<label for="record-image-input" class="change-btn">Change</label>
-
-										<div class="background"></div>
-									</figure>
-								</div>
-
-								<div class="col-md-12">
-									<div id="artists-form-group" class="form-group clearfix">
-										<label class="control-label">Artists:</label>
-
-										<div id="artists-display">
-											@foreach($record->artists as $artist)
-												<div class="artist-selection" data-artist-id="{{ $artist->id }}">
-													<span>{{ $artist->name }}</span>
-													<i class="fa fa-cog artist-edit" data-url="{{ route('ajax.record.artist.editor', ['artist_id' => $artist->id]) }}" data-toggle="modal"
-													   data-target="#artists-modal"></i>
-													<i class="fa fa-remove artist-remove" data-delete-url="{{ route('ajax.record.artist.delete', ['artist_id' => $artist->id]) }}"></i>
-													<input class="artist-input" type="hidden" name="artists[]" value="{{ $artist->id }}"/>
-												</div>
-											@endforeach
-										</div>
-
-										<a id="manage-artists-btn" class="pull-right clearfix" data-url="{{ route('ajax.record.artists') }}" data-toggle="modal" data-target="#artists-modal">
-											<i class="fa fa-cog" style="font-size: 20px; color: #555"></i>
-										</a>
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label">Price:</label>
-										<input class="form-control" type="number" name="price" placeholder="Price" required
-										       value="{{ old('price') ? old('price') : $record->price ? $record->price : '' }}">
-									</div>
-								</div>
-
-								<div class="col-md-6">
-									<div class="form-group">
-										<label class="control-label">Stock:</label>
-										<input class="form-control" type="number" name="stock" placeholder="Stock" required
-										       value="{{ old('stock') ? old('stock') : $record->stock ? $record->stock : '' }}">
-									</div>
-								</div>
-
-								<div class="col-md-12">
-									<div class="form-group">
-										<label class="control-label">Description:</label>
-										<textarea class="form-control" name="description" rows="5" placeholder="Description"
-										          required>{{ old('description') ? old('description') : $record->description ? $record->description : '' }}</textarea>
-									</div>
-								</div>
-
-
-								{{ csrf_field() }}
-
-								<div class="col-md-12">
-									<button class="btn btn-primary pull-right" type="submit">Save changes</button>
-								</div>
-							</div>
-						</form>
+						@include('admin.records.form')
 					</div>
 				</div>
 			</div>
@@ -193,31 +66,13 @@
 					</div>
 
 					<div class="ibox-content">
-						@if(sizeof($record->tracks))
-							<form method="post" action="{{ route('ajax.admin.track.save.many', ['record_id' => $record->id]) }}" autocomplete="off" enctype="multipart/form-data">
-								@foreach($record->tracks as $index => $track)
-									@include('admin.records.tracks.editor2', ['track' => $track, 'index' => $index])
-								@endforeach
-
-								<div id="new-track"></div>
-
-								<a id="add_track" href="{{ route('ajax.admin.track.add', ['record_id' => $record->id]) }}" class="btn btn-warning">Add new track</a>
-
-								{{ csrf_field() }}
-
-								<div class="form-group clearfix m-b-sm">
-									<div class="col-sm-4 col-sm-offset-8 clearfix">
-										<button class="btn btn-primary pull-right" type="submit">Save changes</button>
-									</div>
-								</div>
-							</form>
-						@endif
-
+						@include('admin.records.tracks.items')
 					</div>
 				</div>
 			</div>
 		</div>
 	</main>
+
 	<img src="" id="img"/>
 
 	<form id="theform" method="post" action="{{ route('save.image') }}">
@@ -230,12 +85,9 @@
 @endsection
 
 @section('scripts')
-
 	<script src="{{ asset( 'libs/inspinia/js/plugins/iCheck/icheck.min.js' ) }}"></script>
-	<script src="{{ asset( 'libs/dropzone/dropzone.js' ) }}"></script>
+	{{--<script src="{{ asset( 'libs/dropzone/dropzone.js' ) }}"></script>--}}
 	<script src="{{ asset( 'libs/select2/select2.js' ) }}"></script>
-
-
 
 	<script src="{{ URL::to('js/wavesurfer.js') }}"></script>
 	{{--<script src="{{ URL::to('js/audioPlayer.js') }}"></script>--}}
@@ -343,15 +195,5 @@
 			imageElement.src = myImage;
 
 		}
-	</script>
-
-	<script>
-		//		$(document).ready(function() {
-		//			$('.i-checks').iCheck({
-		//				checkboxClass: 'icheckbox_square-green',
-		//				radioClass: 'iradio_square-green',
-		//			});
-		//		});
-		//		var Dropzone = require("dropzone");
 	</script>
 @endsection

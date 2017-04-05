@@ -32,9 +32,13 @@
         </div>
         @include('includes.footer')
 
+        @include('includes.modal')
+
 
         <script src="{{ asset('libs/inspinia/js/jquery-2.1.1.js') }}"></script>
         <script src="{{ asset('libs/inspinia/js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset( 'libs/is-loading.js' ) }}"></script>
+        <script src="{{ asset('js/app.js') }}"></script>
         {{--<script src="{{ asset('libs/inspinia/js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>--}}
         {{--<script src="{{ asset('libs/inspinia/js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>--}}
 

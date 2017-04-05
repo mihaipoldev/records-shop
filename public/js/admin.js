@@ -23,6 +23,51 @@ $(function() {
 		}, 100);
 	});
 
+	$body.on('click', '.ajax-btn', function(event) {
+		if(!$(this).data('data-toggle') == 'modal') {
+			event.preventDefault();
+		}
+
+		var url = $(this).data('url'),
+			$target = $($(this).data('target'));
+
+		if(url && $target){
+			loadingElement($target);
+			setTimeout(function() {
+				$.ajax({
+					type: "GET",
+					url: url,
+					success: function(result) {
+						$target.html(result);
+					}
+				});
+			}, 100);
+		}
+		else{
+			event.preventDefault();
+		}
+	});
+
+	$body.on('click', '.ajax-labels-btn', function(event) {
+		if(!$(this).data('data-toggle') == 'modal') {
+			event.preventDefault();
+		}
+
+		var url = $(this).data('url');
+
+		loadingElement($modalWrapper);
+		setTimeout(function() {
+			$.ajax({
+				type: "GET",
+				url: url,
+				success: function(result) {
+					$modalWrapper.html(result);
+					setLabelsActiveRow();
+				}
+			});
+		}, 100);
+	});
+
 	$body.on('click', '.label-select-btn', function(event) {
 		event.preventDefault();
 
@@ -125,7 +170,7 @@ $(function() {
 		event.preventDefault();
 
 		var $parent = $(this).parent().parent(),
-			$artistDisplay = $('.track-artists-display[data-track-id='+ $parent.data('track-id') +']'),
+			$artistDisplay = $('.track-artists-display[data-track-id=' + $parent.data('track-id') + ']'),
 			artistId = $(this).data('artist-id');
 
 		if($parent.hasClass('active')) {
@@ -161,7 +206,6 @@ $(function() {
 	/* END */
 
 
-
 	/* START > Photos */
 	$body.on('change', '#record-image-input', function(event) {
 		event.preventDefault();
@@ -178,7 +222,20 @@ $(function() {
 			data: myFormData,
 			success: function(result) {
 				$('#record-image').attr('src', result);
-				$('#ceva').html(result);
+			}
+		});
+	});
+
+	$body.on('change paste keyup', '#search-list', function(event) {
+		var keywords = $(this).val();
+		$('table.list tr.item').each(function() {
+			var text = $(this).find('.text').text();
+
+			if(text.toLowerCase().indexOf(keywords.toLowerCase()) < 0) {
+				$(this).addClass('hidden');
+			}
+			else {
+				$(this).removeClass('hidden');
 			}
 		});
 	});
@@ -221,6 +278,21 @@ $(function() {
 	// 	}
 	// }).disableSelection();
 	/* END > Photos */
+
+
+
+
+	var wave = WaveSurfer.create({
+		container: '#wave-color',
+		height: 40,
+		waveColor: '#555',
+		progressColor: '#555',
+		cursorColor: '#555',
+	});
+
+	wave.load('http://record-shop.lh/uploads/records/goneta-cpd002/audio-goneta.mp3');
+
+
 });
 
 
@@ -267,6 +339,16 @@ var setItemTableList = function() {
 				$tr.addClass('active');
 			}
 		});
+	});
+};
+
+var setLabelsActiveRow = function() {
+	$('.table.labels').find('tr').each(function() {
+		var $tr = $(this);
+		$tr.removeClass('active');
+		if($tr.data('item-id') == $('#label-input').val()) {
+			$tr.addClass('active');
+		}
 	});
 };
 
@@ -320,3 +402,16 @@ var initialize = function() {
 		"hideMethod": "fadeOut"
 	}
 }
+
+
+
+$('body').on('change', '.custom-check input[type=checkbox]', function(){
+	var $parent = $(this).parent().parent();
+
+	if(this.checked){
+		$parent.addClass('checked')
+	}
+	else{
+		$parent.removeClass('checked')
+	}
+});

@@ -11,6 +11,9 @@
 |
 */
 
+// Route::group(['middleware' => 'web'], function() {
+
+
 /**
  * Redirect
  */
@@ -33,45 +36,72 @@ Route::group(['prefix' => '/records'], function() {
 	]);
 });
 
+
+/**
+ * Cart
+ */
+Route::get('add-to-cart/{record_id}', [
+	'uses' => 'RecordController@addToCart',
+	'as'   => 'record.add-to-cart',
+]);
+
+Route::get('shopping-cart', [
+	'uses' => 'RecordController@shoppingCart',
+	'as' => 'record.shopping-cart'
+]);
+
+Route::get('checkout', [
+	'uses' => 'RecordController@checkout',
+	'as' => 'checkout'
+]);
+
+
 /**
  * Admin
  */
 // Route::group(['middleware' => 'auth'], function() {
 Route::group(['prefix' => '/admin'], function() {
-	Route::get('/', [
-		'uses' => 'Admin\IndexController@getIndex',
-		'as'   => 'admin.index',
+
+	/** record */
+	Route::get('/records', [
+		'uses' => 'Admin\RecordController@items',
+		'as'   => 'admin.records',
 	]);
 
-	Route::get('/records/add', [
+	Route::get('/record/add', [
 		'uses' => 'Admin\RecordController@add',
-		'as'   => 'admin.records.add',
+		'as'   => 'admin.record.add',
 	]);
 
-	Route::get('/record/{id}', [
+	Route::get('/record/{record_id}', [
 		'uses' => 'Admin\RecordController@editor',
-		'as'   => 'admin.records.edit',
-	])
-		->where('id', '[0-9]+');
-
+		'as'   => 'admin.record.editor',
+	]);
 
 	Route::post('/record/{record_id}/save', [
-		'uses' => 'Admin\RecordController@ajaxSave',
-		'as'   => 'ajax.admin.record.save',
-	])
-		->where('record_id', '[0-9]+');
+		'uses' => 'Admin\RecordController@save',
+		'as'   => 'admin.record.save',
+	]);
 
 	Route::post('/record/{record_id}/save-image', [
-		'uses' => 'Admin\RecordController@ajaxSaveImage',
-		'as'   => 'ajax.admin.record.save.image',
+		'uses' => 'Admin\RecordController@saveImage',
+		'as'   => 'admin.record.save.image',
+	]);
+
+	Route::post('/record/{record_id}/save-tracks', [
+		'uses' => 'Admin\RecordController@saveTracks',
+		'as'   => 'admin.record.save-tracks',
 	]);
 
 
 	/** track */
-	Route::get('/track/add/to-{record_id}', [
+	Route::get('/record/{record_id}/track/add', [
 		'uses' => 'Admin\TrackController@add',
-		'as'   => 'ajax.admin.track.add',
+		'as'   => 'admin.record.track.add',
 	]);
+
+
+
 
 	Route::get('/track/{track_id}/save', [
 		'uses' => 'Admin\TrackController@ajaxEditor',
@@ -129,11 +159,17 @@ Route::group(['prefix' => '/admin'], function() {
 	]);
 	/** End */
 
-	Route::post('/record/{record_id}/save-tracks', [
-		'uses' => 'Admin\RecordController@ajaxSaveTracks',
-		'as'   => 'ajax.admin.track.save.many',
-	])
-		->where('record_id', '[0-9]+');
+	/** Start ___ Colors */
+	Route::get('/record/{record_id}/colors}', [
+		'uses' => 'Admin\RecordController@colors',
+		'as'   => 'record.colors',
+	]);
+
+	Route::post('/record/{record_id}/save-colors', [
+		'uses' => 'Admin\RecordController@saveColors',
+		'as'   => 'record.save.colors',
+	]);
+	/** End */
 });
 
 Route::post('/save-image', function(Illuminate\Http\Request $request) {
@@ -152,7 +188,7 @@ Route::get('/record-image/{title}', function($title) {
 })->name('record.image');
 
 
-use App\Models\Track;
+// use App\Models\Track;
 
 Route::post('/record-analyser', function(\Illuminate\Http\Request $request) {
 	$track = Track::where('title', 'Goneta')->first();
@@ -174,3 +210,5 @@ Route::get('/record-analyser/{id}', function($id) {
 
 	return view('shop.record-analyser', ['track' => $track, 'array' => $array]);
 })->name('record.analyser.player');
+
+// });

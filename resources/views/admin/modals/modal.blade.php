@@ -1,7 +1,7 @@
-<div id="modal" class="modal inmodal in" tabindex="-1" role="dialog" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content animated fadeIn" id="modal-wrapper">
+<div id="modal" class="modal inmodal in" tabindex="-1" role="dialog" aria-hidden="true" style="display: block;">
 
-		</div>
-	</div>
+	{!! \App\Http\Controllers\Admin\RecordController::colors(app('request'), 4) !!}
+	{{--<div id="modal-wrapper" class="modal-dialog">--}}
+
+	{{--</div>--}}
 </div>

@@ -108,7 +108,7 @@ class TrackController extends Controller
 		$track->draft = false;
 		$track->update();
 
-		return redirect()->route('admin.records.edit', [
+		return redirect()->route('admin.records.editor', [
 			'record_id' => $track->record->id,
 		]);
 	}

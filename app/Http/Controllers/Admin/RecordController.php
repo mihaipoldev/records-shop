@@ -15,14 +15,19 @@ use Illuminate\Support\Facades\Input;
 
 class RecordController extends Controller
 {
-	public function getIndex() {
+	/**
+	 * Items List
+	 *
+	 * @return View
+	 */
+	public function items() {
 		return view('admin.index', [
 			'products' => Record::orderBy('release_date', 'desc')->get(),
 		]);
 	}
 
 	/**
-	 * Add a DRAFT record in the database or use an existing one
+	 * Add (Draft)
 	 *
 	 * @return View
 	 */
@@ -35,8 +40,8 @@ class RecordController extends Controller
 			$record->save();
 		}
 
-		return redirect()->route('admin.records.edit', [
-			'id' => $record->id,
+		return redirect()->route('admin.record.editor', [
+			'record_id' => $record->id,
 		]);
 	}
 
@@ -45,15 +50,71 @@ class RecordController extends Controller
 	 *
 	 * @return View
 	 */
-	public function editor($id) {
-		$record = Record::find($id);
+	public function editor($record_id) {
+		$record = Record::find($record_id);
 
 		return view('admin.records.editor', [
 			'record' => $record,
 		]);
 	}
 
-	public function ajaxSaveTracks(Request $request, $record_id) {
+	/**
+	 * Save
+	 *
+	 * @param Request $request
+	 * @param $record_id
+	 * @return RedirectResponse
+	 */
+	public function save(Request $request, $record_id) {
+		$record = Record::find($record_id);
+
+		$record->fill([
+			'name'         => $request['name'],
+			'label_id'     => $request['label_id'],
+			'release_date' => $request['release_date'],
+			'catalog'      => $request['catalog'],
+			'format'       => $request['format'],
+			'description'  => $request['description'],
+			'price'        => $request['price'],
+			'stock'        => $request['stock'],
+		]);
+
+		if(!$record->slug) {
+			$record->slug = Helper::slugify($record->name . '-' . $record->id);
+		}
+
+		/** artists part */
+		$recordArtists = $request['artists'];
+		if(!isset($recordArtists)) {
+			$recordArtists = [];
+		}
+		foreach($record->artists as $artist) {
+			if(!in_array($artist->id, $recordArtists)) {
+				$record->artists()->detach($artist->id);
+			}
+		}
+		foreach($recordArtists as $artistId) {
+			if(!$record->artists->contains(Artist::find($artistId))) {
+				$record->artists()->attach($artistId);
+			}
+		}
+
+		$record->draft = false;
+		$record->update();
+
+		return redirect()->route('admin.record.editor', [
+			'record_id' => $record->id,
+		]);
+	}
+
+	/**
+	 * Save Tracks
+	 *
+	 * @param Request $request
+	 * @param $record_id
+	 * @return RedirectResponse
+	 */
+	public function saveTracks(Request $request, $record_id) {
 		$this->validate($request, [
 			'tracks.*.name'   => 'required|max:255',
 			'tracks.*.side'   => 'required|max:2',
@@ -67,13 +128,14 @@ class RecordController extends Controller
 		foreach($tracks_request as $id => $track_request) {
 			$track = Track::find($id);
 
-			$track->record_id = $record->id;
-			$track->name = $track_request['name'];
-			$track->side = $track_request['side'];
-			$track->length = $track_request['length'];
-			$track->bpm = $track_request['bpm'];
-			$track->slug = Helper::slugify($track->name);
-			$track->draft = false;
+			$track->fill([
+				'record_id' => $record->id,
+				'name' => $track_request['name'],
+				'side' => $track_request['side'],
+				'length' => $track_request['length'],
+				'bpm' => $track_request['bpm'],
+				'slug' => Helper::slugify($track->name), // todo
+			]);
 
 			/** artists part */
 			if(!isset($track_request['artists'])) {
@@ -95,6 +157,7 @@ class RecordController extends Controller
 				$track->audio = Helper::uploadFileAndGetPath($file, 'records/' . $record->slug, $track->slug);
 			}
 
+			$track->draft = false;
 			$track->update();
 		}
 
@@ -105,47 +168,13 @@ class RecordController extends Controller
 
 
 	/**
-	 * Ajax save track
-	 *
-	 * @param Request $request
-	 * @param $record_id
-	 * @return RedirectResponse
-	 */
-	public function ajaxSave(Request $request, $record_id) {
-		$record = Record::find($record_id);
-
-		$record->fill([
-			'name'         => $request['name'],
-			'label_id'     => $request['label_id'],
-			'release_date' => $request['release_date'],
-			'catalog'      => $request['catalog'],
-			'format'       => $request['format'],
-			'description'  => $request['description'],
-			'price'        => $request['price'],
-			'stock'        => $request['stock'],
-		]);
-
-		if(!$record->slug) {
-			Helper::slugify($record->name);
-		}
-
-		$record->draft = false;
-		$record->update();
-
-		return redirect()->route('admin.records.edit', [
-			'record_id' => $record->id,
-		]);
-	}
-
-
-	/**
-	 * AJAX - Save Image
+	 * Save Image
 	 *
 	 * @param Request $request
 	 * @param $record_id
 	 * @return View
 	 */
-	public function ajaxSaveImage(Request $request, $record_id) {
+	public function saveImage(Request $request, $record_id) {
 		$record = Record::find($record_id);
 
 		File::delete(public_path($record->image));
@@ -155,6 +184,21 @@ class RecordController extends Controller
 
 		$record->save();
 
-		return $record->image;
+		return asset($record->image);
+	}
+
+
+	/**
+	 * Colors
+	 *
+	 * @param $record_id
+	 * @return View
+	 */
+	public static function colors($record_id){
+		$record = Record::find($record_id);
+
+		return view('admin.records.colors', [
+			'record' => $record,
+		]);
 	}
 }

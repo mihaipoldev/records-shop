@@ -1,11 +1,13 @@
 <div class="record-wrapper">
 	<figure>
-		<a href="#">
-			<img src="{{ asset($record->image) }}"/>
-			<span class="image-opacity"></span>
-		</a>
-		<div class="play-wrapper">
-			<a href="#"><i class="fa fa-play-circle"></i></a>
+		<div>
+			<a href="#">
+				<img src="{{ asset($record->image) }}"/>
+				<span class="image-opacity"></span>
+			</a>
+			<div class="play-wrapper">
+				<a href="#"><i class="fa fa-play-circle"></i></a>
+			</div>
 		</div>
 	</figure>
 
@@ -25,7 +27,7 @@
             <span style="display: inline-block; margin-right: 5px; color: forestgreen">
                 <em>in stock</em>
             </span>
-			<a href="#" class="btn-add pull-right">&euro; {{ $record->price }} <i class="fa fa-cart-plus"></i> </a>
+			<a href="{{ route('record.add-to-cart', ['record_id' => $record->id]) }}" class="btn-add pull-right">&euro; {{ $record->price }} <i class="fa fa-cart-plus"></i> </a>
 		</div>
 	</div>
 </div>

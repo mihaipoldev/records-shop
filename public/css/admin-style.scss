@@ -1,10 +1,13 @@
 @import "bootstrap-rewrite";
+
 .select2-dropdown {
 	z-index: 9001 !important;
 }
+
 .modal-dialog {
 	z-index: 1050;
 }
+
 .i-checks {
 	.icheckbox_square-green {
 		position: relative;
@@ -14,19 +17,20 @@
 		}
 		.iCheck-helper {
 			position: absolute;
-			top: 0%;
-			left: 0%;
+			top: 0;
+			left: 0;
 			display: block;
 			width: 100%;
 			height: 100%;
-			margin: 0px;
-			padding: 0px;
+			margin: 0;
+			padding: 0;
 			background: rgb(255, 255, 255);
-			border: 0px;
+			border: 0;
 			opacity: 0;
 		}
 	}
 }
+
 .artist-selection {
 	display: inline-block;
 	float: left;
@@ -54,6 +58,7 @@
 		border-color: #bbb;
 	}
 }
+
 #artists-modal, #modal {
 	table {
 		tr {
@@ -79,14 +84,11 @@
 		}
 	}
 }
-.record-artwork{
+
+.record-artwork {
 	position: relative;
 
-	img{
-
-	}
-
-	.change-btn{
+	.change-btn {
 		position: absolute;
 		bottom: 0;
 		right: 0;
@@ -96,9 +98,10 @@
 		transition: background-color 0.1s, color 0.1s;
 		cursor: pointer;
 		z-index: 10;
+		margin: 0;
 	}
 
-	.background{
+	.background {
 		position: absolute;
 		top: 0;
 		left: 0;
@@ -108,16 +111,99 @@
 		transition: background-color 0.1s;
 	}
 
-	&:hover{
+	&:hover {
 		.background {
 			width: 100%;
 			height: 100%;
 			background-color: rgba(0, 0, 0, 0.15);
 		}
 
-		.change-btn{
-			background: rgba(0,0,0, 0.4);
-			color: #fff
+		.change-btn {
+			background: rgba(0, 0, 0, 0.4);
+			color: #eee;
+
+			&:hover {
+				background: rgba(0, 0, 0, 0.5);
+				color: #fff;
+			}
 		}
 	}
 }
+
+.items-selected{
+	font-weight: bold;
+	border-radius: 2px;
+	border: 1px solid #eee;
+	padding: 7px 12px;
+	max-height: 41px;
+}
+
+.custom-check{
+	display: inline-block;
+
+	ins{
+		position: relative;
+		display: inline-block;
+		vertical-align: middle;
+		margin: 0;
+		padding: 0;
+		width: 22px;
+		height: 22px;
+		cursor: pointer;
+		border-radius: 50%;
+		border: 3px solid #999;
+
+		input{
+			opacity: 0;
+		}
+
+		i{
+			position: absolute;
+			top: 0;
+			left: 4px;
+			opacity: 0;
+		}
+	}
+
+	&.checked{
+		ins{
+			background-color: #0a6aa1;
+			outline: green solid 1px;
+
+			i{
+				opacity: 1;
+			}
+		}
+	}
+}
+
+.plates{
+	display: inline-block;
+	padding: 5px;
+	border: 1px solid #aaa;
+	margin: 0 auto;
+}
+
+.color-plate{
+	position: relative;
+	display: inline-block;
+	text-align: center;
+	width: 70px;
+	height: 100px;
+
+	.text{
+		position: absolute;
+		bottom: 0;
+		width: 100%;
+
+		color: #333;
+		opacity: 0.5;
+	}
+
+	&.color-plate-sm{
+		width: 30px;
+		height: 50px;
+
+	}
+}
+

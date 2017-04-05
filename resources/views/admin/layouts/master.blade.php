@@ -46,13 +46,13 @@
 							</a>
 							<ul class="nav nav-second-level">
 								<li>
-									<a href="{{ route('admin.index') }}">
+									<a href="{{ route('admin.records') }}">
 										<i class="fa fa-line-chart"></i> <span class="nav-label">Index</span>
 									</a>
 								</li>
 
 								<li>
-									<a href="{{ route('admin.records.add') }}">
+									<a href="{{ route('admin.record.add') }}">
 										<i class="fa fa-line-chart"></i> <span class="nav-label">Add Product</span>
 									</a>
 								</li>
@@ -84,6 +84,7 @@
 		<script src="{{ asset( 'libs/inspinia/js/inspinia.js' ) }}"></script>
 		<script src="{{ asset( 'libs/inspinia/js/plugins/pace/pace.min.js' ) }}"></script>
 		<script src="{{ asset( 'libs/is-loading.js' ) }}"></script>
+		<script src="{{ asset('js/wavesurfer.js') }}"></script>
 		<script src="{{ asset( 'js/init.js' ) }}"></script>
 		<script src="{{ asset( 'js/admin.js' ) }}"></script>
 
