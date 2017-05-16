@@ -31,7 +31,6 @@ class Helper
 	}
 
 
-
 	/**
 	 * Upload File and get the path
 	 *
@@ -61,6 +60,34 @@ class Helper
 		}
 
 		return $nameExploded[0] . ($index ? $index : '') . '.' . $nameExploded[1];
+	}
+
+	public static function toHex($n) {
+		$n = intval($n);
+		if(!$n) {
+			return '00';
+		}
+
+		$n = max(0, min($n, 255)); // make sure the $n is not bigger than 255 and not less than 0
+		$index1 = (int)($n - ($n % 16)) / 16;
+		$index2 = (int)$n % 16;
+
+		return substr("0123456789ABCDEF", $index1, 1)
+		. substr("0123456789ABCDEF", $index2, 1);
+	}
+
+	public static function rgbaToHex($rgba) {
+		$rgbaExploded = explode(")", explode("(", $rgba)[1])[0];
+		$rgbaExploded = explode(",", $rgbaExploded);
+
+
+		$red = (int)((int)$rgbaExploded[0] * $rgbaExploded[3] + 255 * (1 - $rgbaExploded[3]));
+		$green = (int)((int)$rgbaExploded[1] * $rgbaExploded[3] + 255 * (1 - $rgbaExploded[3]));
+		$blue = (int)((int)$rgbaExploded[2] * $rgbaExploded[3] + 255 * (1 - $rgbaExploded[3]));
+
+		$hex = '#' . base_convert($red, 10, 16) . base_convert($green, 10, 16) . base_convert($blue, 10, 16);
+
+		return $hex;
 	}
 
 }

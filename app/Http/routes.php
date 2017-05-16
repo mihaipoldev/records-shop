@@ -160,14 +160,14 @@ Route::group(['prefix' => '/admin'], function() {
 	/** End */
 
 	/** Start ___ Colors */
-	Route::get('/record/{record_id}/colors}', [
+	Route::get('/record/{record_id}/colors', [
 		'uses' => 'Admin\RecordController@colors',
 		'as'   => 'record.colors',
 	]);
 
 	Route::post('/record/{record_id}/save-colors', [
 		'uses' => 'Admin\RecordController@saveColors',
-		'as'   => 'record.save.colors',
+		'as'   => 'record.colors.save',
 	]);
 	/** End */
 });

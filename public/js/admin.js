@@ -31,7 +31,7 @@ $(function() {
 		var url = $(this).data('url'),
 			$target = $($(this).data('target'));
 
-		if(url && $target){
+		if(url && $target) {
 			loadingElement($target);
 			setTimeout(function() {
 				$.ajax({
@@ -43,7 +43,7 @@ $(function() {
 				});
 			}, 100);
 		}
-		else{
+		else {
 			event.preventDefault();
 		}
 	});
@@ -280,17 +280,86 @@ $(function() {
 	/* END > Photos */
 
 
-
-
 	var wave = WaveSurfer.create({
 		container: '#wave-color',
 		height: 40,
-		waveColor: '#555',
-		progressColor: '#555',
-		cursorColor: '#555',
+		waveColor: $body.find('#wave-color').data('color'),
 	});
 
 	wave.load('http://record-shop.lh/uploads/records/goneta-cpd002/audio-goneta.mp3');
+	/* Colors __Start */
+	$body.on('click', '.color-form .cp', function(e) {
+		e.preventDefault();
+
+		// change view
+		var $this = $(this),
+			type = $this.data('type'),
+			color = $this.css('background-color'),
+			backgroundPos = $this.data('pos'),
+			backgroundLeft = $(document).find('#background-gradient').attr('data-background-left'),
+			backgroundRight = $(document).find('#background-gradient').attr('data-background-right'),
+			$backgroundContainer = $(document).find('#background-gradient');
+
+		if(type) {
+			$this.parent().find('.cp').removeClass('active');
+			$this.addClass('active');
+
+			switch(type) {
+				case 'wave':
+					wave.destroy();
+					wave = WaveSurfer.create({
+						container: '#wave-color',
+						height: 40,
+						waveColor: color,
+					});
+					wave.load('http://record-shop.lh/uploads/records/goneta-cpd002/audio-goneta.mp3');
+
+					$(document).find('.color-form').find('input[name="wave"]').val(color);
+
+					break;
+
+				case 'background':
+					console.log(backgroundLeft, backgroundRight);
+
+					if(backgroundPos == 'left') {
+						$backgroundContainer.css('background', 'linear-gradient(135deg, ' + color + ' 0%, ' + backgroundRight + ' 100%)');
+						$backgroundContainer.attr('data-background-left', color);
+
+						$(document).find('.color-form').find('input[name="background-left"]').val(color);
+					}
+					else {
+						$backgroundContainer.css('background', 'linear-gradient(135deg, ' + backgroundLeft + ' 0%, ' + color + ' 100%)');
+						$backgroundContainer.attr('data-background-right', color);
+
+						$(document).find('.color-form').find('input[name="background-right"]').val(color);
+					}
+					break;
+
+			}
+		}
+		// change inputs
+
+	});
+
+	// $body.on('submit', '.color-form', function(e) {
+	// 	e.preventDefault();
+	//
+	// 	var $this = $(this),
+	// 		url = $this.attr('action'),
+	// 		data = ajaxData($this.serializeArray());
+	//
+	// 	$.ajax({
+	// 		type: 'POST',
+	// 		url: url,
+	// 		data: data,
+	// 		success: function(response) {
+	// 			console.log(response);
+	// 			$this.html(response);
+	//
+	// 		}
+	// 	})
+	// });
+	/* Colors __End */
 
 
 });
@@ -404,14 +473,13 @@ var initialize = function() {
 }
 
 
-
-$('body').on('change', '.custom-check input[type=checkbox]', function(){
+$('body').on('change', '.custom-check input[type=checkbox]', function() {
 	var $parent = $(this).parent().parent();
 
-	if(this.checked){
+	if(this.checked) {
 		$parent.addClass('checked')
 	}
-	else{
+	else {
 		$parent.removeClass('checked')
 	}
 });

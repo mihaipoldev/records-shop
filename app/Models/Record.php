@@ -21,6 +21,7 @@ class Record extends Model
 		'price',
 		'stock',
 		'online',
+		'color_id',
 	];
 
 	protected $dates = ['deleted_at'];
@@ -53,6 +54,10 @@ class Record extends Model
 
 	public function displayAll() {
 
+	}
+
+	public function color(){
+		return $this->belongsTo('App\Models\Color');
 	}
 
 

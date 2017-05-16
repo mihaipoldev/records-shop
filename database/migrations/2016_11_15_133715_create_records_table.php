@@ -25,6 +25,7 @@ class CreateRecordsTable extends Migration
 			$table->string('price')->nullable();
 			$table->integer('stock')->nullable();
 			$table->boolean('online')->nullable()->default(false);
+			$table->integer('color_id')->nullable()->unsigned();
 			$table->boolean('draft')->nullable()->default(false);
 			$table->timestamps();
 			$table->softDeletes();
@@ -32,6 +33,9 @@ class CreateRecordsTable extends Migration
 			$table->foreign('label_id')
 				->references('id')
 				->on('labels');
+			$table->foreign('color_id')
+				->references('id')
+				->on('colors');
 		});
 	}
 

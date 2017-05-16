@@ -1,6 +1,6 @@
-<div class="modal-dialog">
+<div class="modal-dialog ">
 	<div class="modal-content animated fadeIn">
-		<form method="post" action="">
+		<form class="color-form" method="post" action="{{ route('record.colors.save', ['record_id' => $record->id]) }}">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">
 					<span aria-hidden="true">×</span><span class="sr-only">Close</span>
@@ -13,88 +13,59 @@
 			</div>
 
 			<div class="modal-body">
-				<div class="form-group">
-					{{--<div class="plates">--}}
-						{{--<div class="color-plate" style="background-color: #3DADEE">--}}
-							{{--<div class="text">#3DADEE</div>--}}
-						{{--</div>--}}
+				<div class="m-b-lg">
+					<h3 class="m-b-md">Wave Color:</h3>
 
-						{{--<div class="color-plate" style="background-color: #A6CE41">--}}
-							{{--<div class="text">#A6CE41</div>--}}
-						{{--</div>--}}
+					<div class="m-b-sm" id="wave-color" data-color="{{ ($record->color and $record->color->wave) ? $record->color->wave : '#555' }}" style="width: 100%; height: 40px;"></div>
 
-						{{--<div class="color-plate" style="background-color: #E3E433">--}}
-							{{--<div class="text">#E3E433</div>--}}
-						{{--</div>--}}
-
-						{{--<div class="color-plate" style="background-color: #4B494F">--}}
-							{{--<div class="text">#4B494F</div>--}}
-						{{--</div>--}}
-
-						{{--<div class="color-plate" style="background-color: #FAFAFA">--}}
-							{{--<div class="text">#FAFAFA</div>--}}
-						{{--</div>--}}
-					{{--</div>--}}
-
-					<div class="row row-5">
-						<div class="col-md-1 text-ce">
-							<div style="width: 100%; height: 80px; margin-top: 10px; background-color: #3DADEE">
-								{{--<div class="text">#FAFAFA</div>--}}
-							</div>
-						</div>
-
-						<div class="col-md-10">
-							<div style="width: 100%; height: 100px; background: linear-gradient(135deg, #3DADEE 0%, #A6CE41 100%);">
-
-							</div>
-						</div>
-
-						<div class="col-md-1">
-							<div style="width: 100%; height: 80px; margin-top: 10px; background-color: #A6CE41">
-								{{--<div class="text">#FAFAFA</div>--}}
-							</div>
+					<div class="text-left">
+						<div class="colors">
+							@foreach($colors['wave'] as $color)
+								<span class="cp cp-circle {{ ($record->color and $record->color->wave == \App\Helpers\Helper::toHex($color)) ? 'active' : '' }}" data-type="wave" style="background-color: {{ $color }}"></span>
+							@endforeach
 						</div>
 					</div>
-
-
-
-					<div class="row">
-						<div class="col-md-4 text-center">
-								<label>Background 1: </label>
-								<div>
-									<div class="color-plate color-plate-sm" style="background-color: #4B494F">
-										{{--<div class="text">#FAFAFA</div>--}}
-									</div>
-								</div>
-						</div>
-
-						<div class="col-md-4 text-center">
-								<label>Background 2: </label>
-								<div>
-									<div class="color-plate color-plate-sm" style="background-color: #E3E433">
-										{{--<div class="text">#FAFAFA</div>--}}
-									</div>
-								</div>
-						</div>
-
-						<div class="col-md-4 text-center">
-							<label>Background 2: </label>
-							<div>
-								<div class="color-plate color-plate-sm" style="background-color: #3DADEE">
-									{{--<div class="text">#FAFAFA</div>--}}
-								</div>
-							</div>
-
-						</div>
-					</div>
-
-
 				</div>
-				<div id="wave-color" style="width: 100%; height: 40px;" ></div>
+
+				<hr>
+
+				<div class="clearfix m-b-lg">
+					<h3 class="m-b-md">Background Color:</h3>
+
+					<div id="background-gradient" class="m-b-sm"
+					     style="width: 100%; height: 50px; background: linear-gradient(135deg, {{ ($record->color and $record->color->background_left) ? $record->color->background_right : '#eee' }} 0%, {{ ($record->color and $record->color->background_right) ? $record->color->background_right : '#ddd' }} 100%);"
+					     data-background-left="{{ ($record->color and $record->color->background_left) ? $record->color->background_right : '#eee' }}"
+					     data-background-right="{{ ($record->color and $record->color->background_right) ? $record->color->background_right : '#ddd' }}"></div>
+
+					<div class="colors pull-left">
+						@foreach($colors['background'] as $color)
+							<span class="cp cp-circle {{ ($record->color and $record->color->background_left == \App\Helpers\Helper::toHex($color)) ? 'active' : '' }}"
+							      style="background-color: {{ $color }}" data-type="background" data-pos="left"></span>
+						@endforeach
+					</div>
+
+					<div class="colors pull-right">
+						@foreach($colors['background'] as $color)
+							<span class="cp cp-circle {{ ($record->color and $record->color->background_right == \App\Helpers\Helper::toHex($color)) ? 'active' : '' }}"
+							      data-type="background"  data-pos="right">
+								<ins style="background-color: {{ $color }}"></ins>
+							</span>
+
+								{{--<span class="color-p {{ ($record->color and $record->color->background_right == \App\Helpers\Helper::toHex($color)) ? 'active' : '' }}">--}}
+									{{--<ins style="background-color: {{ $color }}"></ins>--}}
+								{{--</span>--}}
+						@endforeach
+					</div>
+				</div>
+
+				<input type="hidden" name="wave" value="{{ $record->color ? $record->color->wave : '' }}"/>
+				<input type="hidden" name="background-left" value="{{ $record->color ? $record->color->background_left : '' }}"/>
+				<input type="hidden" name="background-right" value="{{ $record->color ? $record->color->background_right : '' }}"/>
 			</div>
 
 			<div class="modal-footer">
-				<button type="submit" class="btn btn-primary form-submit-btn">Save</button>
+				<button class="btn btn-warning"><i class="fa fa-eye"></i></button>
+				<button type="submit" class="btn btn-primary form-submit-btn">Save Changes</button>
 				<button type="button" class="btn btn-white" data-dismiss="modal">Close</button>
 			</div>
 

@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Helpers\Helper;
 use App\Http\Controllers\Controller;
 use App\Models\Artist;
+use App\Models\Color;
 use App\Models\Record;
 use App\Models\Track;
+use ColorThief\ColorThief;
 use File;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -130,11 +132,11 @@ class RecordController extends Controller
 
 			$track->fill([
 				'record_id' => $record->id,
-				'name' => $track_request['name'],
-				'side' => $track_request['side'],
-				'length' => $track_request['length'],
-				'bpm' => $track_request['bpm'],
-				'slug' => Helper::slugify($track->name), // todo
+				'name'      => $track_request['name'],
+				'side'      => $track_request['side'],
+				'length'    => $track_request['length'],
+				'bpm'       => $track_request['bpm'],
+				'slug'      => Helper::slugify($track->name), // todo
 			]);
 
 			/** artists part */
@@ -191,14 +193,52 @@ class RecordController extends Controller
 	/**
 	 * Colors
 	 *
+	 * @param $request
 	 * @param $record_id
 	 * @return View
 	 */
-	public static function colors($record_id){
+	public static function colors(Request $request, $record_id) {
 		$record = Record::find($record_id);
+
+		$imagePath = public_path() . '/' . $record->image;
+		$colorsPlates = ColorThief::getPalette($imagePath, 5, 7);
+
+		$colors = [
+			'background' => [],
+			'wave' => [],
+		];
+		foreach($colorsPlates as $color){
+			$colors['background'][] = Helper::rgbaToHex('rgba(' . $color[0] . ',' . $color[1] . ',' . $color[2] . ', 0.5)');
+			$colors['wave'][] = Helper::rgbaToHex('rgba(' . $color[0] . ',' . $color[1] . ',' . $color[2] . ', 0.8)');
+		}
 
 		return view('admin.records.colors', [
 			'record' => $record,
+			'colors' => $colors,
 		]);
+	}
+
+
+	/**
+	 * Save Colors
+	 *
+	 * @param $request
+	 * @param $record_id
+	 * @return string
+	 */
+	public static function saveColors(Request $request, $record_id) {
+		$record = Record::find($record_id);
+
+		if(!$record->color){
+			$record->color()->associate(Color::create([]));
+			$record->update();
+		}
+
+		$record->color->wave = Helper::toHex($request['wave']);
+		$record->color->background_left = Helper::toHex($request['background-left']);
+		$record->color->background_right = Helper::toHex($request['background-right']);
+		$record->color->update();
+
+		return 'true';
 	}
 }
