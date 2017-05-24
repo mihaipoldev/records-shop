@@ -117,14 +117,6 @@
 			</div>
 		</div>
 
-		<div class="col-md-12">
-			<div class="form-group">
-				<label class="control-label">Description:</label>
-				<textarea class="form-control" name="description" rows="5" placeholder="Description"
-				          required>{{ old('description') ? old('description') : $record->description ? $record->description : '' }}</textarea>
-			</div>
-		</div>
-
 		{{ csrf_field() }}
 
 		<div class="col-md-12">
